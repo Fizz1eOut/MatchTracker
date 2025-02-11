@@ -9,5 +9,10 @@
 </template>
 
 <style scoped>
-
+  .link {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-white);
+    font-family: "Roboto Condensed", serif;
+  }
 </style>
