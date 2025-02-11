@@ -39,7 +39,7 @@ body {
 }
 
 body {
-  background-color: var(--color-background);
+  background-color: var(--color-dark-green);
   font-size: 18px;
   font-weight: 400;
   color: var(--color-white);
@@ -49,6 +49,12 @@ body {
 .line {
   position: relative;
   display: inline-block;
+  cursor: pointer;
+  transition: color 0.4s ease-in-out;
+}
+
+.line:hover {
+  color: var(--color-light-blue);
 }
 
 .line::after {
@@ -58,7 +64,7 @@ body {
   bottom: -3px;
   width: 100%;
   height: 2px;
-  background: var(--color-gradient);
+  background: var(--color-light-blue);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.4s ease-in-out;
@@ -70,19 +76,17 @@ body {
 }
 
 
+
 /* var-color */
 :root {
   --color-white: #FFFFFF;
-  --color-blue: #1FB9EE;
-  --color-yellow: #EDB60B;
-  --color-green: #039855;
-  --color-red: #D92D20;
+  --color-amber: #E68A00;
+  --color-amber-hover: #FF9F1C;
+  --color-light-blue: #66D9EF;
   --color-gray: #6b6d7c;
-  --color-gradient: linear-gradient(90deg, #1fb9ee 0%, #8b43d8 100%);
-  --color-gradient-hover: linear-gradient(90deg, #41acca 0%, #b573ff 100%);
-  --color-background: #141627;
-  --color-underlay: #1a1d34;
-  --color-deep-blue: #25283E;
+  --color-dark-green: #0B1C19;
+  --color-underlay: #162824;
+
 }
 
 /* @media (max-width: 991px) {

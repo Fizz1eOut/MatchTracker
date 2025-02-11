@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-
+  import AppContainer from '@/components/Base/AppContainer.vue';
 </script>
 
 <template>
