@@ -4,6 +4,7 @@
   // import AppNavMobile from '@/components/Base/AppNavMobile.vue';
   import AppIcon from '@/components/Base/AppIcon.vue';
   import { useMediaQuery } from '@/composables/useMediaQuery';
+  import UserTime from '@/components/Base/UserTime.vue';
 
   const { isMobile } = useMediaQuery('(max-width: 768px)');
 </script>
@@ -23,6 +24,7 @@
           <app-nav v-if="!isMobile" class="nav" />
           <!-- <app-nav-mobile v-if="isMobile" class="nav-mobile" /> -->
         </div>
+        <user-time />
       </div>
     </app-container>
   </div>
