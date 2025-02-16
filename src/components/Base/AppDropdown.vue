@@ -33,14 +33,14 @@
 .dropdown {
   position: absolute;
   left: 0px;
-  z-index: 2;
+  z-index: 10;
   top: 100%;
-  background-color: var(--color-background);
-  box-shadow: 0px 0px 10px 1px rgba(95, 95, 95, 0.25);
-  border-radius: 8px;
-  width: 158px;
+  background-color: var(--color-underlay);
+  box-shadow: 0px 0px 10px 1px rgb(0 0 0 / 25%);
+  border-radius: 10px;
+  width: 240px;
 }
 .dropdown-list> *:not(:last-child) {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 </style>

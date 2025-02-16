@@ -5,6 +5,7 @@
   import AppLink from '@/components/Base/AppLink.vue';
   import AppDropdown from '@/components/Base/AppDropdown.vue';
   import AppDropdownItem from '@/components/Base/AppDropdownItem.vue';
+  import AppImage from '@/components/Base/AppImage.vue';
 
   const leagues = ref<League[]>([]);
   const isDropdownOpen = ref(false);
@@ -12,8 +13,9 @@
   const fetchLeagues = async () => {
     try {
       leagues.value = await getLeagues();
+      console.log('Leagues loaded:', leagues.value);
     } catch (error) {
-      console.error('Ошибка загрузки лиг:', error);
+      console.error('Error loading leagues:', error);
     }
   };
 
@@ -24,7 +26,7 @@
   };
 
   const handleLeagueClick = (leagueName: string) => {
-    console.log(`Выбрана лига: ${leagueName}`);
+    console.log(`League selected: ${leagueName}`);
   };
 </script>
 
@@ -35,12 +37,14 @@
         <app-link>
           Competitions
         </app-link>
-        <app-dropdown :active="isDropdownOpen">
+        <app-dropdown :active="isDropdownOpen" class="dropdown__body">
           <app-dropdown-item 
             v-for="league in leagues" 
             :key="league.id" 
             @click="handleLeagueClick(league.name)"
+            class="dropdown__body__item"
           >
+            <app-image :imageUrl="league.emblem" class="league-icon" />
             {{ league.name }}
           </app-dropdown-item>
         </app-dropdown>
@@ -73,26 +77,41 @@
   </div>
 </template>
 
+<style>
+  .dropdown__body__item .item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+</style>
 <style scoped>
-.nav {
-  max-width: 550px;
-  width: 100%;
-}
+  .nav {
+    max-width: 550px;
+    width: 100%;
+  }
 
-.nav__body {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
+  .nav__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
 
-.router-link-active .link {
-  cursor: pointer;
-  color: var(--color-light-blue);
-}
+  .router-link-active .link {
+    cursor: pointer;
+    color: var(--color-light-blue);
+  }
 
-.dropdown-container {
-  position: relative;
-  cursor: pointer;
-}
+  .dropdown-container {
+    position: relative;
+    cursor: pointer;
+  }
+  .dropdown__body {
+    height: 250px;
+    overflow: auto;
+  }
+  .league-icon {
+    background-color: var(--color-white);
+    border-radius: 2px;
+  }
 </style>

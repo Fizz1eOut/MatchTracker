@@ -6,6 +6,7 @@ export interface League {
   id: number;
   name: string;
   code: string;
+  emblem: string;
 }
 
 export const getLeagues = async (): Promise<League[]> => {
