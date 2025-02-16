@@ -6,6 +6,7 @@
   import AppDropdown from '@/components/Base/AppDropdown.vue';
   import AppDropdownItem from '@/components/Base/AppDropdownItem.vue';
   import AppImage from '@/components/Base/AppImage.vue';
+  import AppIcon from '@/components/Base/AppIcon.vue';
 
   const leagues = ref<League[]>([]);
   const isDropdownOpen = ref(false);
@@ -34,9 +35,17 @@
   <div class="nav">
     <div class="nav__body">
       <div class="nav__item dropdown-container" @click="toggleDropdown">
-        <app-link>
-          Competitions
-        </app-link>
+        <div class="dropdown-container__row">
+          <app-link>
+            Competitions
+          </app-link>
+          <app-icon 
+            name="arrow"
+            size="20px" 
+            style="color: var(--color-white)"
+            :class="{'rotated': isDropdownOpen, 'icon-arrow': true}" 
+          />
+        </div>
         <app-dropdown :active="isDropdownOpen" class="dropdown__body">
           <app-dropdown-item 
             v-for="league in leagues" 
@@ -106,6 +115,10 @@
     position: relative;
     cursor: pointer;
   }
+  .dropdown-container__row {
+    display: flex;
+    align-items: center;
+  }
   .dropdown__body {
     height: 250px;
     overflow: auto;
@@ -114,4 +127,12 @@
     background-color: var(--color-white);
     border-radius: 2px;
   }
+  .icon-arrow {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .icon-arrow.rotated {
+    transform: rotate(0deg);
+  }
+
 </style>
