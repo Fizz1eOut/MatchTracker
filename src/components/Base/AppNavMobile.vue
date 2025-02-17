@@ -69,18 +69,6 @@
 </template>
 
 <style scoped>
-  .nav-mobile__row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 164px;
-  }
-  .nav-mobile__row .nav-mobile__link {
-    font-size: 20px;
-  }
-  .nav-mobile__link {
-    pointer-events: none;
-  }
   .router-link-active .nav-mobile__link {
     cursor: pointer;
     color: var(--color-light-blue);
@@ -99,15 +87,10 @@
       background-color: var(--color-underlay);
     }
     .nav-mobile__body {
-      /* margin-top: 120px; */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      margin-top: 100px;
     }
     .nav-mobile__body >*:not(:last-child) {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     .v-enter-active,
