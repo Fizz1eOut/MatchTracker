@@ -1,12 +1,10 @@
 <script setup lang="ts">
   import { ref, onMounted, onUnmounted } from 'vue';
 
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(userTimeZone);
   const currentTime = ref('');
 
   const updateTime = () => {
-    currentTime.value = new Date().toLocaleTimeString([], { timeZone: userTimeZone });
+    currentTime.value = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
 
   let interval: ReturnType<typeof setInterval> | null = null;
@@ -23,7 +21,6 @@
 
 <template>
   <div class="time-container">
-    <div class="timezone">Timezone:{{ userTimeZone }}</div>
     <div class="time">{{ currentTime }}</div>
   </div>
 </template>
@@ -33,14 +30,9 @@
     text-align: center;
     font-family: "Roboto Condensed", serif;
   }
-  .timezone {
-    font-size: 14px;
-    font-weight: 400;
-  }
   .time {
-    margin-top: 6px;
     font-size: 16px;
     font-weight: 400;
-
   }
-  </style>
+</style>
+
