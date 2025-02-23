@@ -13,6 +13,6 @@
     font-size: 16px;
     font-weight: 400;
     color: var(--color-white);
-    font-family: "Roboto Condensed", serif;
+    font-family: "Roboto", serif;
   }
 </style>

@@ -28,7 +28,7 @@
 <style scoped>
   .time-container {
     text-align: center;
-    font-family: "Roboto Condensed", serif;
+    font-family: "Roboto", serif;
   }
   .time {
     font-size: 16px;
