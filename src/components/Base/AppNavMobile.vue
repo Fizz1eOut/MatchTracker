@@ -71,7 +71,7 @@
 <style scoped>
   .router-link-active .nav-mobile__link {
     cursor: pointer;
-    color: var(--color-light-blue);
+    color: var(--color-white);
   }
 
   @media (max-width: 768px) {

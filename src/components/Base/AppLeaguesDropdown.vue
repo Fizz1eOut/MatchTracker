@@ -40,7 +40,7 @@
       <app-icon 
         name="arrow"
         size="20px" 
-        :style="{ color: isDropdownOpen ? 'var(--color-light-blue)' : 'var(--color-white)' }"
+        :style="{ color: isDropdownOpen ? 'var(--color-white)' : 'var(--color-gray)' }"
         :class="{ 'rotated': isDropdownOpen, 'icon-arrow': true }" 
       />
     </div>
@@ -87,9 +87,9 @@
   }
   .icon-arrow.rotated {
     transform: rotate(0deg);
-    fill: var(--color-light-blue);
+    fill: var(--color-gray);
   }
   .active {
-    color: var(--color-light-blue);
+    color: var(--color-white);
   }
 </style>

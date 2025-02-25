@@ -52,6 +52,6 @@
 
   .router-link-active .link {
     cursor: pointer;
-    color: var(--color-light-blue);
+    color: var(--color-white);
   }
 </style>
