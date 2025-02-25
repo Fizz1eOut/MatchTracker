@@ -49,25 +49,25 @@
 
   .button-action {
     height: 36px;
-    background-color: var(--color-amber);
+    background-color: var(--color-yellow);
     border-radius: 10px;
     transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
   }
   .button-action:hover {
-    background-color: var(--color-amber-hover);
+    background-color: var(--color-yellow-hover);
     box-shadow: 0 4px 8px rgba(255, 159, 28, 0.4);
   }
 
   .button-outline {
     height: 36px;
-    border: 1px solid var(--color-amber);
+    border: 1px solid var(--color-yellow);
     color: var(--color-white);
     background: transparent;
     transition: border 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
     border-radius: 10px;
   }
   .button-outline:hover {
-    border: 2px solid var(--color-amber-hover);
+    border: 2px solid var(--color-yellow-hover);
     box-shadow: 0 4px 8px rgba(255, 159, 28, 0.4);
   }
 
