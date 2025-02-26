@@ -8,6 +8,35 @@
     isOngoing: (match: Match) => boolean;
   }
   defineProps<MatchItemProps>();
+
+  const determineWinner = (match: Match): 'HOME_TEAM' | 'AWAY_TEAM' | 'DRAW' => {
+    const { fullTime, penalties } = match.score;
+
+    // Безопасное извлечение значений (если null, то 0)
+    const homeScore = fullTime.home ?? 0;
+    const awayScore = fullTime.away ?? 0;
+
+    if (homeScore > awayScore) return 'HOME_TEAM';
+    if (homeScore < awayScore) return 'AWAY_TEAM';
+
+    // Проверяем пенальти, если ничья
+    const homePenalties = penalties?.home ?? 0;
+    const awayPenalties = penalties?.away ?? 0;
+
+    if (homePenalties > awayPenalties) return 'HOME_TEAM';
+    if (homePenalties < awayPenalties) return 'AWAY_TEAM';
+
+    return 'DRAW';
+  };
+
+
+  const getLoserClass = (teamType: 'home' | 'away', match: Match) => {
+    if (match.status !== 'FINISHED') return ''; // Подсвечиваем только завершенные матчи
+    const winner = determineWinner(match);
+    if (winner === 'DRAW') return ''; // Ничья — никто не проиграл
+    return winner === 'HOME_TEAM' && teamType === 'away' ? 'loser' : 
+      winner === 'AWAY_TEAM' && teamType === 'home' ? 'loser' : '';
+  };
 </script>
 
 <template>
@@ -16,12 +45,13 @@
       <div v-if="isOngoing(match)" class="match__status">
         Live
       </div>
+      <div v-else-if="match.status === 'FINISHED'" class="match__status match__status--finished">Finished</div>
       <div v-else class="match__time">
         {{ formatMatchTime(match.utcDate) }}
       </div>
     </div>
     <div class="match">
-      <div class="match__item">
+      <div class="match__item" :class="getLoserClass('home', match)">
         <div class="match__row">
           <app-image 
             :imageUrl="match.homeTeam.crest" 
@@ -30,12 +60,17 @@
           />
           <div class="match__team">{{ match.homeTeam.name }}</div>
         </div> 
-        <div v-if="isOngoing(match)">
-          {{ match.score.fullTime.home ?? 0 }}
+        <div v-if="isOngoing(match) || match.status === 'FINISHED'">
+          <div class="match__score">
+            {{ match.score.fullTime.home ?? '-' }}
+            <div v-if="match.score.penalties?.home !== undefined">
+              ({{ match.score.penalties.home }})
+            </div>
+          </div>
         </div>
       </div>
     
-      <div class="match__item">
+      <div class="match__item" :class="getLoserClass('away', match)">
         <div class="match__row">
           <app-image 
             :imageUrl="match.awayTeam.crest" 
@@ -44,8 +79,13 @@
           />
           <div class="match__team">{{ match.awayTeam.name }}</div>
         </div>
-        <div v-if="isOngoing(match)">
-          {{ match.score.fullTime.away ?? 0 }}
+        <div v-if="isOngoing(match) || match.status === 'FINISHED'">
+          <div class="match__score">
+            {{ match.score.fullTime.away ?? '-' }}
+            <div v-if="match.score.penalties?.away !== undefined"> 
+              ({{ match.score.penalties.away }})
+            </div>
+          </div>
         </div> 
       </div>
     </div>
@@ -65,10 +105,33 @@
     cursor: pointer;
     background-color: var(--color-secondary-underlay);
   }
+  .match-item__info {
+    width: 54px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+  .match-item__info > div {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .loser {
+    color: var(--color-gray);
+    opacity: 0.6;
+  }
   .match__status {
     font-size: 18px;
     font-weight: 400;
     color: rgb(211 46 46);
+  }
+  .match__status--finished {
+    font-size: 14px;
+    color: var(--color-gray);
   }
   .match {
     width: 100%;
@@ -81,6 +144,11 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+  }
+  .match__score {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .match__row {
     display: flex;

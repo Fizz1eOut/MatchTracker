@@ -30,6 +30,11 @@ export interface Match {
       home: number | null;
       away: number | null;
     };
+    penalties: {
+      home: number | null;
+      away: number | null;
+    };
+    winner: 'HOME_TEAM' | 'AWAY_TEAM' | 'DRAW';
   };
 }
 

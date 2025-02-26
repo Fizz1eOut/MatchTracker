@@ -5,7 +5,6 @@
   import AllMatches from '@/components/Content/MatchList/AllMatches.vue';
   import LiveMatches from '@/components/Content/MatchList/LiveMatches.vue';
   import NextMatch from '@/components/Content/MatchList/NextMatch.vue';
-  import FinishedMatches from '@/components/Content/MatchList/FinishedMatches.vue';
 
   const isLoading = ref(true);
   const matches = ref<Match[]>([]);
@@ -52,12 +51,21 @@
     }, {} as Record<number, { name: string; emblem: string; matches: Match[] }>);
   };
 
-  // вычисляемые свойства с уже сгруппированными матчами
-  const finishedMatches = computed(() => groupMatchesByLeague(matches.value.filter(match => match.status === 'FINISHED')));
-  const todayMatches = computed(() => groupMatchesByLeague(matches.value.filter(match => ['SCHEDULED', 'TIMED', 'IN_PLAY'].includes(match.status))));
+  // Все матчи за сегодня, включая завершенные
+  const todayMatches = computed(() => 
+    groupMatchesByLeague(matches.value.filter(match => 
+      ['SCHEDULED', 'TIMED', 'IN_PLAY', 'FINISHED'].includes(match.status)
+    ))
+  );
+
   const liveMatches = computed(() => groupMatchesByLeague(matches.value.filter(match => isOngoing(match))));
+
   const nextMatch = computed(() => {
-    const match = matches.value.find(match => !isOngoing(match));
+    const upcomingMatches = matches.value
+      .filter(match => new Date(match.utcDate) > new Date()) // Только будущие матчи
+      .sort((a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()); // Сортировка по времени
+  
+    const match = upcomingMatches[0];
     return match ? { [match.competition.id]: { name: match.competition.name, emblem: match.competition.emblem, matches: [match] } } : {};
   });
 
@@ -70,7 +78,6 @@
     <div class="match-list">
       <div class="match-list__item">
         <all-matches :matchesByLeague="todayMatches" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
-        <finished-matches :matchesByLeague="finishedMatches" />
       </div>
       <div class="match-list__item">
         <live-matches :matchesByLeague="liveMatches" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
@@ -79,6 +86,7 @@
     </div>
   </div>
 </template>
+
 
 <style scoped>
   .match-list {
