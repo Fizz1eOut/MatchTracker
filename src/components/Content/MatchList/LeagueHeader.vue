@@ -27,7 +27,6 @@
 
 <style scoped>
   .league-matches__header {
-    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
