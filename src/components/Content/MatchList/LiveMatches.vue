@@ -5,6 +5,7 @@
   import AppContainer from '@/components/Base/AppContainer.vue';
   import LeagueHeader from '@/components/Content/MatchList/LeagueHeader.vue';
   import AppMatchCard from '@/components/Base/AppMatchCard.vue';
+  import AppDivider from '@/components/Base/AppDivider.vue';
 
   interface LiveMatchProps {
     matchesByLeague: Record<number, { name: string; emblem: string; matches: Match[] }>;
@@ -25,6 +26,8 @@
             :key="leagueId" 
             class="upcoming-match__group"
           >
+            <app-divider class="match-divider" />
+
             <league-header 
               :name="league.name" 
               :emblem="league.emblem" 
@@ -59,7 +62,10 @@
     width: 40px;
     height: 40px;
   }
-  .upcoming-match__list > *:not(:last-child) {
-    border-bottom: 1px solid var(--color-gray);
+  .upcoming-match__group:first-child .match-divider {
+    display: none;
+  }
+  .match-divider {
+    margin-bottom: 20px;
   }
 </style>
