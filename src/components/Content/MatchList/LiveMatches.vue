@@ -16,15 +16,15 @@
 </script>
 
 <template>
-  <div class="upcoming-match" v-if="Object.keys(matchesByLeague).length > 0">
-    <app-title class="upcoming-match__title">Upcoming Showdown</app-title>
+  <div class="live-matches" v-if="Object.keys(matchesByLeague).length > 0">
+    <app-title class="live-matches__title">Live Matches</app-title>
     <app-underlay>
       <app-container size="sm">
-        <div class="upcoming-match__list">
+        <div class="live-matches__list">
           <div 
             v-for="(league, leagueId) in matchesByLeague"
             :key="leagueId" 
-            class="upcoming-match__group"
+            class="live-matches__group"
           >
             <app-divider class="match-divider" />
 
@@ -33,7 +33,7 @@
               :emblem="league.emblem" 
               :country="league.matches[0].area.name" 
             />
-            <ul class="upcoming-match__items">
+            <ul class="live-matches__items">
               <app-match-card
                 v-for="match in league.matches"
                 :key="match.id"
@@ -51,7 +51,10 @@
 </template>
 
 <style scoped>
-  .upcoming-match__title {
+  .live-matches {
+    margin-bottom: 30px;
+  }
+  .live-matches__title {
     margin-bottom: 30px
   }
   :deep(.league-matches__header) {
@@ -62,7 +65,7 @@
     width: 40px;
     height: 40px;
   }
-  .upcoming-match__group:first-child .match-divider {
+  .live-matches__group:first-child .match-divider {
     display: none;
   }
   .match-divider {
