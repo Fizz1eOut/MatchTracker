@@ -62,7 +62,7 @@
         </div> 
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
           <div class="match__score">
-            {{ match.score.fullTime.home ?? '-' }}
+            {{ match.score.fullTime.home ?? '0' }}
             <div v-if="match.score.penalties?.home !== undefined">
               ({{ match.score.penalties.home }})
             </div>
@@ -81,7 +81,7 @@
         </div>
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
           <div class="match__score">
-            {{ match.score.fullTime.away ?? '-' }}
+            {{ match.score.fullTime.away ?? '0' }}
             <div v-if="match.score.penalties?.away !== undefined"> 
               ({{ match.score.penalties.away }})
             </div>

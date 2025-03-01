@@ -6,17 +6,12 @@
   import LeagueHeader from '@/components/Content/MatchList/LeagueHeader.vue';
   import AppMatchCard from '@/components/Base/AppMatchCard.vue';
 
-  interface NextMatchProps {
+  interface LiveMatchProps {
     matchesByLeague: Record<number, { name: string; emblem: string; matches: Match[] }>;
     formatMatchTime: (utcDate: string) => string;
     isOngoing: (match: Match) => boolean;
   }
-  defineProps<NextMatchProps>();
-  const emit = defineEmits(['match-ended']);
-
-  const onMatchEnded = () => {
-    emit('match-ended');
-  };
+  defineProps<LiveMatchProps>();
 </script>
 
 <template>
@@ -42,8 +37,7 @@
                 :match="match"
                 :formatMatchTime="formatMatchTime"
                 :isOngoing="isOngoing"
-                @match-ended="onMatchEnded"
-                displayMode="countdown"
+                displayMode="score"
               />
             </ul>
           </div>
@@ -64,5 +58,8 @@
   :deep(.league-matches__logo) {
     width: 40px;
     height: 40px;
+  }
+  .upcoming-match__list > *:not(:last-child) {
+    border-bottom: 1px solid var(--color-gray);
   }
 </style>

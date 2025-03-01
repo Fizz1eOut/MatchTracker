@@ -7,6 +7,7 @@
     match: Match;
     formatMatchTime: (utcDate: string) => string;
     isOngoing: (match: Match) => boolean;
+    displayMode: 'countdown' | 'score';
   }
 
   defineProps<MatchCardProps>();
@@ -25,7 +26,26 @@
         <div class="match__team">{{ match.homeTeam.name }}</div>
       </div>
 
-      <match-countdown :utcDate="match.utcDate" @match-ended="onMatchEnded" />
+      <div class="match__center">
+        <match-countdown 
+          v-if="displayMode === 'countdown'" 
+          :utcDate="match.utcDate" 
+          @match-ended="onMatchEnded" 
+        />
+
+        <div v-if="displayMode === 'score'">
+          <div v-if="isOngoing(match)" class="match__status">Live</div>
+
+          <div v-if="isOngoing(match) || match.status === 'FINISHED'" class="match__score">
+            <span>{{ match.score.fullTime.home ?? "0" }}</span> - 
+            <span>{{ match.score.fullTime.away ?? "0" }}</span>
+
+            <div v-if="match.score.penalties?.home !== undefined">
+              ({{ match.score.penalties.home }} - {{ match.score.penalties.away }})
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="match__item">
         <app-image :imageUrl="match.awayTeam.crest" :alt="match.awayTeam.name" class="logo" />
@@ -44,7 +64,7 @@
     gap: 10px;
   }
   .match__item {
-    max-width: 200px;
+    flex: 0 1 50%;
   }
   .match__row {
   }
@@ -59,6 +79,23 @@
     font-weight: 400px;
     text-align: center;
   }
-  .match__time {
+  .match__center {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    text-align: center;
+  }
+
+  .match__status {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .match__score {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
   }
 </style>
