@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted, onUnmounted } from 'vue';
   import { getMatches } from '@/api/matches';
   import type { Match } from '@/interface/matches.interface';
   import AllMatches from '@/components/Content/MatchList/AllMatches.vue';
@@ -8,6 +8,7 @@
 
   const isLoading = ref(true);
   const matches = ref<Match[]>([]);
+  let updateTimer: number | null = null;
 
   const loadMatches = async () => {
     try {
@@ -51,7 +52,6 @@
     }, {} as Record<number, { name: string; emblem: string; matches: Match[] }>);
   };
 
-  // Все матчи за сегодня, включая завершенные
   const todayMatches = computed(() => 
     groupMatchesByLeague(matches.value.filter(match => 
       ['SCHEDULED', 'TIMED', 'IN_PLAY', 'FINISHED'].includes(match.status)
@@ -61,15 +61,38 @@
   const liveMatches = computed(() => groupMatchesByLeague(matches.value.filter(match => isOngoing(match))));
 
   const nextMatch = computed(() => {
+    const now = new Date();
     const upcomingMatches = matches.value
-      .filter(match => new Date(match.utcDate) > new Date()) // Только будущие матчи
-      .sort((a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime()); // Сортировка по времени
-  
+      .filter((match) => new Date(match.utcDate) > now) // Только будущие матчи
+      .sort((a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime());
+
     const match = upcomingMatches[0];
-    return match ? { [match.competition.id]: { name: match.competition.name, emblem: match.competition.emblem, matches: [match] } } : {};
+    return match
+      ? {
+        [match.competition.id]: {
+          name: match.competition.name,
+          emblem: match.competition.emblem,
+          matches: [match],
+        },
+      }
+      : {};
   });
 
-  onMounted(loadMatches);
+  // Периодическое обновление nextMatch каждые 5 секунд
+  const startNextMatchUpdate = () => {
+    updateTimer = setInterval(() => {
+    // Вызываем пересчёт nextMatch, Vue автоматически обновит computed
+    }, 5000);
+  };
+
+  onMounted(() => {
+    loadMatches();
+    startNextMatchUpdate();
+  });
+
+  onUnmounted(() => {
+    if (updateTimer !== null) clearInterval(updateTimer);
+  });
 </script>
 
 <template>
@@ -81,12 +104,16 @@
       </div>
       <div class="match-list__item">
         <live-matches :matchesByLeague="liveMatches" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
-        <next-match :matchesByLeague="nextMatch" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
+        <next-match 
+          :matchesByLeague="nextMatch" 
+          :formatMatchTime="formatMatchTime" 
+          :isOngoing="isOngoing" 
+          @match-ended="loadMatches"
+        />
       </div>
     </div>
   </div>
 </template>
-
 
 <style scoped>
   .match-list {
