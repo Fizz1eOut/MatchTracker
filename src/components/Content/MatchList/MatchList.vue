@@ -5,6 +5,7 @@
   import AllMatches from '@/components/Content/MatchList/AllMatches.vue';
   import LiveMatches from '@/components/Content/MatchList/LiveMatches.vue';
   import NextMatch from '@/components/Content/MatchList/NextMatch.vue';
+  import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
 
   const isLoading = ref(true);
   const matches = ref<Match[]>([]);
@@ -96,7 +97,11 @@
 </script>
 
 <template>
-  <div v-if="isLoading">Loading...</div>
+  <app-loading-spinner 
+    v-if="isLoading"
+    size="60px"
+    height="100vh"
+  />
   <div v-else>
     <div class="match-list">
       <div class="match-list__item all-match-list__all-matches">

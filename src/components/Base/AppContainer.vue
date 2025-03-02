@@ -55,7 +55,8 @@
   }
 
   @media (max-width: 499px) {
-    .size-md {
+    .size-md,
+    .size-sm {
       padding: 16px;
     }
     .size-xl {
