@@ -12,7 +12,7 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
 };
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory('/MatchTracker'),
   routes: [
     { path: '/', name: 'home', component: HomeView, meta: { title: 'Home' } },
   ],

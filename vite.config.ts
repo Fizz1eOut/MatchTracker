@@ -30,4 +30,15 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
   },
+
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://vue-football-proxy.onrender.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  }
+  
 });
