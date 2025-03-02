@@ -7,7 +7,7 @@ import { configDefaults } from 'vitest/config';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/CoinWatcher',
+  base: '/MatchTracker/',
   plugins: [
     vue(),
     vueDevTools(),
