@@ -57,37 +57,42 @@
 </template>
 
 <style scoped>
-.countdown-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 120px;
-  width: 100%;
-}
-.countdown {
-  font-size: 18px;
-  font-weight: 400;
-  display: flex;
-}
-.countdown-char {
-  display: inline-block;
-  transition: transform 0.5s ease-in-out;
-}
-.flip {
-  animation: flip 0.6s ease-in-out;
-}
-@keyframes flip {
-  0% {
-    transform: rotateX(0deg);
+  .countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 120px;
+    width: 100%;
   }
-  50% {
-    transform: rotateX(-90deg);
-    opacity: 0.5;
+  .countdown {
+    font-size: 18px;
+    font-weight: 400;
+    display: flex;
   }
-  100% {
-    transform: rotateX(0deg);
-    opacity: 1;
+  .countdown-char {
+    display: inline-block;
+    transition: transform 0.5s ease-in-out;
   }
-}
+  .flip {
+    animation: flip 0.6s ease-in-out;
+  }
+  @keyframes flip {
+    0% {
+      transform: rotateX(0deg);
+    }
+    50% {
+      transform: rotateX(-90deg);
+      opacity: 0.5;
+    }
+    100% {
+      transform: rotateX(0deg);
+      opacity: 1;
+    }
+  }
+  @media (max-width: 480px) {
+    .countdown {
+      font-size: 16px;
+    }
+  }  
 </style>
 

@@ -76,7 +76,7 @@
   .match__team {
     margin-top: 20px;
     font-size: 20px;
-    font-weight: 400px;
+    font-weight: 400;
     text-align: center;
   }
   .match__center {
@@ -85,17 +85,28 @@
     width: 100px;
     text-align: center;
   }
-
   .match__status {
-    color: red;
-    font-weight: bold;
+    color: rgb(211 46 46);
+    font-weight: 400;
     font-size: 18px;
     margin-bottom: 10px;
   }
-
   .match__score {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 400;
     margin-top: 10px;
+  }
+  @media (max-width: 480px) {
+    .match__team,
+    .match__score,
+    .match__status {
+      font-size: 16px;
+    }
+    .logo {
+      height: 60px;
+    }
+    .match__content {
+      padding: 20px 10px;
+    }
   }
 </style>

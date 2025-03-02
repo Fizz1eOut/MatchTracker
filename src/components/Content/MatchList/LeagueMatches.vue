@@ -24,7 +24,7 @@
             :country="league.matches[0].area.name" 
           />
           <ul class="league-matches__list">
-            <MatchItem 
+            <match-item 
               v-for="match in league.matches" 
               :key="match.id" 
               :match="match"

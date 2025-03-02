@@ -12,10 +12,9 @@
 </script>
 
 <template>
-
   <div v-if="Object.keys(matchesByLeague).length > 0">
     <app-title class="all-match__title">Upcoming Matches Today</app-title>
-    <LeagueMatches 
+    <league-matches 
       v-for="(league, leagueId) in matchesByLeague" 
       :key="leagueId" 
       :league="league" 
@@ -23,7 +22,6 @@
       :isOngoing="isOngoing" 
     />
   </div>
-  <p v-else>No matches today</p>
 </template>
 
 <style scoped>

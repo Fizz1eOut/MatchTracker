@@ -73,13 +73,13 @@
     .burger--active::before {
       top: 50%;
       transform: rotate(45deg);
-      background-color: var(--color-light-blue);
+      background-color: var(--color-gray);
     }
     .burger--active::after {
       bottom: auto;
       top: 50%;
       transform: rotate(-45deg);
-      background-color: var(--color-light-blue);
+      background-color: var(--color-gray);
     }
   }
 </style>

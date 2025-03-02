@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import type { Match } from '@/interface/matches.interface';
   import AppImage from '@/components/Base/AppImage.vue';
+  import AppDivider from '@/components/Base/AppDivider.vue';
 
   interface MatchItemProps {
     match: Match;
@@ -50,8 +51,11 @@
         {{ formatMatchTime(match.utcDate) }}
       </div>
     </div>
+
+    <app-divider />
+
     <div class="match">
-      <div class="match__item" :class="getLoserClass('home', match)">
+      <div class="match__group" :class="getLoserClass('home', match)">
         <div class="match__row">
           <app-image 
             :imageUrl="match.homeTeam.crest" 
@@ -70,7 +74,7 @@
         </div>
       </div>
     
-      <div class="match__item" :class="getLoserClass('away', match)">
+      <div class="match__group" :class="getLoserClass('away', match)">
         <div class="match__row">
           <app-image 
             :imageUrl="match.awayTeam.crest" 
@@ -79,6 +83,7 @@
           />
           <div class="match__team">{{ match.awayTeam.name }}</div>
         </div>
+
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
           <div class="match__score">
             {{ match.score.fullTime.away ?? '0' }}
@@ -96,8 +101,8 @@
   .match-item {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 14px 20px;
+    gap: 14px;
+    padding: 10px;
     border-radius: 10px;
     transition: background-color 0.3s ease-in-out;
   }
@@ -106,13 +111,12 @@
     background-color: var(--color-secondary-underlay);
   }
   .match-item__info {
-    width: 54px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 40px;
+    width: 100%;
     display: flex;
     align-items: center;
-    min-width: 0;
+    font-size: 14px;
+    font-weight: 400;
   }
   .match-item__info > div {
     flex-shrink: 1;
@@ -120,13 +124,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  :deep(.divider) {
+    width: 1px;
+    height: 60px;
+  }
   .loser {
     color: var(--color-gray);
     opacity: 0.6;
   }
   .match__status {
-    font-size: 18px;
-    font-weight: 400;
     color: rgb(211 46 46);
   }
   .match__status--finished {
@@ -139,7 +145,7 @@
   .match > *:not(:first-child) {
     margin-top: 10px;
   }
-  .match__item {
+  .match__group {
     display: flex;
     align-items: center;
     justify-content: space-between;

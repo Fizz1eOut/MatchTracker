@@ -99,7 +99,7 @@
   <div v-if="isLoading">Loading...</div>
   <div v-else>
     <div class="match-list">
-      <div class="match-list__item">
+      <div class="match-list__item all-match-list__all-matches">
         <all-matches :matchesByLeague="todayMatches" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
       </div>
       <div class="match-list__item">
@@ -123,5 +123,13 @@
   }
   .match-list__item {
     flex:  0 1 50%;
+  }
+  @media (max-width: 868px) {
+    .match-list {
+      flex-direction: column;
+    }
+    .all-match-list__all-matches {
+      order: 1;
+    }
   }
 </style>
