@@ -3,6 +3,7 @@
   import AppContainer from '@/components/Base/AppContainer.vue';
   import AppNav from '@/components/Base/AppNav.vue';
   import AppNavMobile from '@/components/Base/AppNavMobile.vue';
+  import AppIcon from '@/components/Base/AppIcon.vue';
   import { useMediaQuery } from '@/composables/useMediaQuery';
   import UserTime from '@/components/Base/UserTime.vue';
   import AppBurger from '@/components/Base/AppBurger.vue';
@@ -24,7 +25,7 @@
       <div class="header__body">
         <div class="header__img">
           <router-link to="/">
-            <img src="../../assets/icons/logo.svg" alt="">
+            <img src="../../assets/icons/Logo.png" alt="Logo">
           </router-link>
         </div>
         <app-nav v-if="!isMobile" />
