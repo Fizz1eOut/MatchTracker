@@ -84,8 +84,8 @@ body {
   --color-yellow-hover: #F5D741;
   --color-gray: #A5A5A5;
   --color-dark: #000000;
-  --color-underlay: #0A0A0A;
-  --color-secondary-underlay: #141414;
+  --color-underlay: #141414;
+  --color-secondary-underlay: #1E1E1E;
 }
 
 /* @media (max-width: 991px) {
