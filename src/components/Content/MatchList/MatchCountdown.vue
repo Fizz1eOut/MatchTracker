@@ -72,6 +72,7 @@
   .countdown-char {
     display: inline-block;
     transition: transform 0.5s ease-in-out;
+    color: var(--color-white);
   }
   .flip {
     animation: flip 0.6s ease-in-out;

@@ -19,40 +19,42 @@
 </script>
 
 <template>
-  <li class="upcoming-match__item match">
-    <div class="match__content">
-      <div class="match__item">
-        <app-image :imageUrl="match.homeTeam.crest" :alt="match.homeTeam.name" class="logo" />
-        <div class="match__team">{{ match.homeTeam.name }}</div>
-      </div>
+  <router-link :to="`/match/${match.id}`">
+    <li class="upcoming-match__item match">
+      <div class="match__content">
+        <div class="match__item">
+          <app-image :imageUrl="match.homeTeam.crest" :alt="match.homeTeam.name" class="logo" />
+          <div class="match__team">{{ match.homeTeam.name }}</div>
+        </div>
 
-      <div class="match__center">
-        <match-countdown 
-          v-if="displayMode === 'countdown'" 
-          :utcDate="match.utcDate" 
-          @match-ended="onMatchEnded" 
-        />
+        <div class="match__center">
+          <match-countdown 
+            v-if="displayMode === 'countdown'" 
+            :utcDate="match.utcDate" 
+            @match-ended="onMatchEnded" 
+          />
 
-        <div v-if="displayMode === 'score'">
-          <div v-if="isOngoing(match)" class="match__status">Live</div>
+          <div v-if="displayMode === 'score'">
+            <div v-if="isOngoing(match)" class="match__status">Live</div>
 
-          <div v-if="isOngoing(match) || match.status === 'FINISHED'" class="match__score">
-            <span>{{ match.score.fullTime.home ?? "0" }}</span> - 
-            <span>{{ match.score.fullTime.away ?? "0" }}</span>
+            <div v-if="isOngoing(match) || match.status === 'FINISHED'" class="match__score">
+              <span>{{ match.score.fullTime.home ?? "0" }}</span> - 
+              <span>{{ match.score.fullTime.away ?? "0" }}</span>
 
-            <div v-if="match.score.penalties?.home !== undefined">
-              ({{ match.score.penalties.home }} - {{ match.score.penalties.away }})
+              <div v-if="match.score.penalties?.home !== undefined">
+                ({{ match.score.penalties.home }} - {{ match.score.penalties.away }})
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="match__item">
-        <app-image :imageUrl="match.awayTeam.crest" :alt="match.awayTeam.name" class="logo" />
-        <div class="match__team">{{ match.awayTeam.name }}</div>
+        <div class="match__item">
+          <app-image :imageUrl="match.awayTeam.crest" :alt="match.awayTeam.name" class="logo" />
+          <div class="match__team">{{ match.awayTeam.name }}</div>
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
+  </router-link>
 </template>
 
 <style scoped>
@@ -78,6 +80,7 @@
     font-size: 20px;
     font-weight: 400;
     text-align: center;
+    color: var(--color-white);
   }
   .match__center {
     display: flex;
@@ -95,6 +98,7 @@
     font-size: 24px;
     font-weight: 400;
     margin-top: 10px;
+    color: var(--color-white);
   }
   @media (max-width: 480px) {
     .match__team,
