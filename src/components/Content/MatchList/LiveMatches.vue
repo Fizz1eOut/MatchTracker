@@ -34,14 +34,18 @@
               :country="league.matches[0].area.name" 
             />
             <ul class="live-matches__items">
-              <app-match-card
-                v-for="match in league.matches"
-                :key="match.id"
-                :match="match"
-                :formatMatchTime="formatMatchTime"
-                :isOngoing="isOngoing"
-                displayMode="score"
-              />
+              <li v-for="match in league.matches" :key="match.id">
+                <router-link :to="`/match/${match.id}`">
+                  <app-match-card
+                    v-for="match in league.matches"
+                    :key="match.id"
+                    :match="match"
+                    :formatMatchTime="formatMatchTime"
+                    :isOngoing="isOngoing"
+                    displayMode="score"
+                  />
+                </router-link>
+              </li>
             </ul>
           </div>
         </div>

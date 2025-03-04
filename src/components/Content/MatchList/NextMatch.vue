@@ -36,15 +36,17 @@
               :country="league.matches[0].area.name" 
             />
             <ul class="upcoming-match__items">
-              <app-match-card
-                v-for="match in league.matches"
-                :key="match.id"
-                :match="match"
-                :formatMatchTime="formatMatchTime"
-                :isOngoing="isOngoing"
-                @match-ended="onMatchEnded"
-                displayMode="countdown"
-              />
+              <li v-for="match in league.matches" :key="match.id">
+                <router-link :to="`/match/${match.id}`">
+                  <app-match-card
+                    :match="match"
+                    :formatMatchTime="formatMatchTime"
+                    :isOngoing="isOngoing"
+                    @match-ended="onMatchEnded"
+                    displayMode="countdown"
+                  />
+                </router-link>
+              </li>
             </ul>
           </div>
         </div>
