@@ -41,7 +41,7 @@
 </script>
 
 <template>
-  <li class="match-item">
+  <div class="match-item">
     <div class="match-item__info">
       <div v-if="isOngoing(match)" class="match__status">
         Live
@@ -94,7 +94,7 @@
         </div> 
       </div>
     </div>
-  </li>
+  </div>
 </template>
 
 <style scoped>
@@ -127,6 +127,12 @@
   :deep(.divider) {
     width: 1px;
     height: 60px;
+  }
+  .match__team,
+  .match__score {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-white);
   }
   .loser {
     color: var(--color-gray);
