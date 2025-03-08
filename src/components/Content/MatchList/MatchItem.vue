@@ -30,11 +30,10 @@
     return 'DRAW';
   };
 
-
   const getLoserClass = (teamType: 'home' | 'away', match: Match) => {
-    if (match.status !== 'FINISHED') return ''; // Подсвечиваем только завершенные матчи
+    if (match.status !== 'FINISHED') return '';
     const winner = determineWinner(match);
-    if (winner === 'DRAW') return ''; // Ничья — никто не проиграл
+    if (winner === 'DRAW') return '';
     return winner === 'HOME_TEAM' && teamType === 'away' ? 'loser' : 
       winner === 'AWAY_TEAM' && teamType === 'home' ? 'loser' : '';
   };
@@ -117,6 +116,7 @@
     align-items: center;
     font-size: 14px;
     font-weight: 400;
+    color: var(--color-white);
   }
   .match-item__info > div {
     flex-shrink: 1;

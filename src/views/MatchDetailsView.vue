@@ -4,6 +4,7 @@
   import type { Match } from '@/interface/matches.interface';
   import { getMatchDetails } from '@/api/matchDetails';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
+  import MatchDetail from '@/components/Content/MatchDetail/MatchDetail.vue';
 
   const route = useRoute();
   const matchDetails = ref<Match | null>(null);
@@ -41,6 +42,6 @@
     height="100vh"
   />
   <div v-else>
-    <h1>Match Details</h1>
+    <match-detail :match-details="matchDetails" />
   </div>
 </template>
