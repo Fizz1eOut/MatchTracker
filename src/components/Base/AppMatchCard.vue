@@ -16,6 +16,34 @@
   const onMatchEnded = () => {
     emit('match-ended');
   };
+
+  const determineWinner = (match: Match): 'HOME_TEAM' | 'AWAY_TEAM' | 'DRAW' => {
+    const { fullTime, penalties } = match.score;
+
+    // Безопасное извлечение значений (если null, то 0)
+    const homeScore = fullTime.home ?? 0;
+    const awayScore = fullTime.away ?? 0;
+
+    if (homeScore > awayScore) return 'HOME_TEAM';
+    if (homeScore < awayScore) return 'AWAY_TEAM';
+
+    // Проверяем пенальти, если ничья
+    const homePenalties = penalties?.home ?? 0;
+    const awayPenalties = penalties?.away ?? 0;
+
+    if (homePenalties > awayPenalties) return 'HOME_TEAM';
+    if (homePenalties < awayPenalties) return 'AWAY_TEAM';
+
+    return 'DRAW';
+  };
+
+  const getLoserClass = (teamType: 'home' | 'away', match: Match) => {
+    if (match.status !== 'FINISHED') return '';
+    const winner = determineWinner(match);
+    if (winner === 'DRAW') return '';
+    return winner === 'HOME_TEAM' && teamType === 'away' ? 'loser' : 
+      winner === 'AWAY_TEAM' && teamType === 'home' ? 'loser' : '';
+  };
 </script>
 
 <template>
@@ -23,7 +51,7 @@
     <div class="match__content">
       <div class="match__item">
         <app-image :imageUrl="match.homeTeam.crest" :alt="match.homeTeam.name" class="logo" />
-        <div class="match__team">{{ match.homeTeam.name }}</div>
+        <div :class="getLoserClass('home', match)" class="match__team">{{ match.homeTeam.name }}</div>
       </div>
 
       <div class="match__center">
@@ -37,8 +65,8 @@
           <div v-if="isOngoing(match)" class="match__status">Live</div>
 
           <div v-if="isOngoing(match) || match.status === 'FINISHED'" class="match__score">
-            <span>{{ match.score.fullTime.home ?? "0" }}</span> - 
-            <span>{{ match.score.fullTime.away ?? "0" }}</span>
+            <span :class="getLoserClass('home', match)">{{ match.score.fullTime.home ?? "0" }}</span> - 
+            <span :class="getLoserClass('away', match)">{{ match.score.fullTime.away ?? "0" }}</span>
 
             <div v-if="match.score.penalties?.home !== undefined">
               ({{ match.score.penalties.home }} - {{ match.score.penalties.away }})
@@ -49,7 +77,7 @@
 
       <div class="match__item">
         <app-image :imageUrl="match.awayTeam.crest" :alt="match.awayTeam.name" class="logo" />
-        <div class="match__team">{{ match.awayTeam.name }}</div>
+        <div :class="getLoserClass('away', match)" class="match__team">{{ match.awayTeam.name }}</div>
       </div>
     </div>
   </div>
@@ -66,7 +94,9 @@
   .match__item {
     flex: 0 1 50%;
   }
-  .match__row {
+  .loser {
+    color: var(--color-gray);
+    opacity: 0.6;
   }
   .logo {
     width: 100%;
