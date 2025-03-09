@@ -37,15 +37,13 @@
             />
             <ul class="upcoming-match__items">
               <li v-for="match in league.matches" :key="match.id">
-                <router-link :to="`/match/${match.id}`">
-                  <app-match-card
-                    :match="match"
-                    :formatMatchTime="formatMatchTime"
-                    :isOngoing="isOngoing"
-                    @match-ended="onMatchEnded"
-                    displayMode="countdown"
-                  />
-                </router-link>
+                <app-match-card
+                  :match="match"
+                  :formatMatchTime="formatMatchTime"
+                  :isOngoing="isOngoing"
+                  @match-ended="onMatchEnded"
+                  displayMode="countdown"
+                />
               </li>
             </ul>
           </div>
