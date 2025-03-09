@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { useRouter } from 'vue-router';
   import type { Match } from '@/interface/matches.interface';
   import AppImage from '@/components/Base/AppImage.vue';
   import MatchCountdown from '@/components/Content/MatchList/MatchCountdown.vue';
@@ -44,12 +45,17 @@
     return winner === 'HOME_TEAM' && teamType === 'away' ? 'loser' : 
       winner === 'AWAY_TEAM' && teamType === 'home' ? 'loser' : '';
   };
+
+  const router = useRouter();
+  const goToTeamPage = (teamId: number) => {
+    router.push(`/team/${teamId}`);
+  };
 </script>
 
 <template>
   <div class="upcoming-match__item match">
     <div class="match__content">
-      <div class="match__item">
+      <div @click="goToTeamPage(match.homeTeam.id)" class="match__item">
         <app-image :imageUrl="match.homeTeam.crest" :alt="match.homeTeam.name" class="logo" />
         <div :class="getLoserClass('home', match)" class="match__team">{{ match.homeTeam.name }}</div>
       </div>
@@ -75,7 +81,7 @@
         </div>
       </div>
 
-      <div class="match__item">
+      <div class="match__item" @click="goToTeamPage(match.awayTeam.id)">
         <app-image :imageUrl="match.awayTeam.crest" :alt="match.awayTeam.name" class="logo" />
         <div :class="getLoserClass('away', match)" class="match__team">{{ match.awayTeam.name }}</div>
       </div>
@@ -93,6 +99,7 @@
   }
   .match__item {
     flex: 0 1 50%;
+    cursor: pointer;
   }
   .loser {
     color: var(--color-gray);
