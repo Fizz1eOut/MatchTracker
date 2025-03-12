@@ -14,7 +14,7 @@ export interface Area {
 export interface Competition {
   id: number;
   name: string;
-  emblem?: string;
+  emblem: string;
 }
 
 export interface Team {

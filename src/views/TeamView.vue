@@ -3,6 +3,8 @@
   import { useRoute } from 'vue-router';
   import { getTeamById } from '@/api/teams';
   import type { Team } from '@/interface/teams.interface';
+  import TeamDetails from '@/components/Content/TeamDetails/TeamDetails.vue';
+  import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
 
   const route = useRoute();
   const team = ref<Team | null>(null);
@@ -26,7 +28,12 @@
 </script>
 
 <template>
-  <div v-if="team">
-    <h1>{{ team.name }}</h1>
+  <app-loading-spinner 
+    v-if="isLoading"
+    size="60px"
+    height="100vh"
+  />
+  <div v-else>
+    <team-details :team="team" />
   </div>
 </template>
