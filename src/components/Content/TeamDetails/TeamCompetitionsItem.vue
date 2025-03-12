@@ -10,7 +10,7 @@
     isSelected: boolean;
   }
   const props = defineProps<TeamCompetitionsItemProps>();
-  // Эмит события при клике
+
   const emit = defineEmits<{
     (event: 'click', competition: Competition): void;
   }>();
@@ -45,12 +45,23 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: background-color 0.3s, color 0.3s, filter 0.3s;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, filter 0.3s ease-in-out;
+  }
+  .competition__row.selected .competition__name {
+    color: var(--color-white);
+  }
+  .competition__row.selected .competition__emblem {
+    filter: grayscale(0);
+    opacity: 1;
   }
   .competition__name {
     font-size: 18px;
     font-weight: 400;
     color: var(--color-gray);
+    transition: color 0.3s ease-in-out;
+  }
+  .competition__row:hover .competition__name {
+    color: var(--color-white);
   }
   .competition__emblem {
     background-color: var(--color-white);
@@ -58,13 +69,9 @@
     height: 30px;
     filter: grayscale(100%);
     opacity: 0.6;
-    transition: filter 0.3s, opacity 0.3s;
+    transition: filter 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
-  .competition__row.selected .competition__name {
-    color: var(--color-white);
-  }
-
-  .competition__row.selected .competition__emblem {
+  .competition__row:hover .competition__emblem {
     filter: grayscale(0);
     opacity: 1;
   }
