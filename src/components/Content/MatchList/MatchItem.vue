@@ -2,6 +2,8 @@
   import type { Match } from '@/interface/matches.interface';
   import AppImage from '@/components/Base/AppImage.vue';
   import AppDivider from '@/components/Base/AppDivider.vue';
+  import { getTeamById } from '@/api/teams';
+  import { useRouter } from 'vue-router';
 
   interface MatchItemProps {
     match: Match;
@@ -37,6 +39,20 @@
     return winner === 'HOME_TEAM' && teamType === 'away' ? 'loser' : 
       winner === 'AWAY_TEAM' && teamType === 'home' ? 'loser' : '';
   };
+
+  const router = useRouter();
+  const goToTeamPage = async (teamId: number) => {
+    try {
+      const team = await getTeamById(String(teamId));
+    
+      if (team) {
+        router.push(`/team/${teamId}`);
+      }
+    } catch (error) {
+      console.error(`Error loading command ${teamId}:`, error);
+      alert('Error loading command. The page will not open.');
+    }
+  };
 </script>
 
 <template>
@@ -54,7 +70,11 @@
     <app-divider />
 
     <div class="match">
-      <div class="match__group" :class="getLoserClass('home', match)">
+      <div 
+        class="match__group" 
+        :class="getLoserClass('home', match)" 
+        @click="goToTeamPage(match.homeTeam.id)"
+      >
         <div class="match__row">
           <app-image 
             :imageUrl="match.homeTeam.crest" 
@@ -73,7 +93,11 @@
         </div>
       </div>
     
-      <div class="match__group" :class="getLoserClass('away', match)">
+      <div 
+        class="match__group" 
+        :class="getLoserClass('away', match)" 
+        @click="goToTeamPage(match.awayTeam.id)"
+      >
         <div class="match__row">
           <app-image 
             :imageUrl="match.awayTeam.crest" 

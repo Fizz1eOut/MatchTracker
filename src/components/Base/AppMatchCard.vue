@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useRouter } from 'vue-router';
+  import { getTeamById } from '@/api/teams';
   import type { Match } from '@/interface/matches.interface';
   import AppImage from '@/components/Base/AppImage.vue';
   import MatchCountdown from '@/components/Content/MatchList/MatchCountdown.vue';
@@ -47,8 +48,17 @@
   };
 
   const router = useRouter();
-  const goToTeamPage = (teamId: number) => {
-    router.push(`/team/${teamId}`);
+  const goToTeamPage = async (teamId: number) => {
+    try {
+      const team = await getTeamById(String(teamId));
+    
+      if (team) {
+        router.push(`/team/${teamId}`);
+      }
+    } catch (error) {
+      console.error(`Error loading command ${teamId}:`, error);
+      alert('Error loading command. The page will not open.');
+    }
   };
 </script>
 
