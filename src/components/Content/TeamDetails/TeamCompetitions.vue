@@ -1,10 +1,13 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
+  import { getCompetitionStandings } from '@/api/competitions';
+  import type { Standings } from '@/interface/standings.interface';
   import type { Competition } from '@/interface/teams.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
   import TeamCompetitionsItem from '@/components/Content/TeamDetails/TeamCompetitionsItem.vue';
+  import TeamCompetitionsStandings from '@/components/Content/TeamDetails/TeamCompetitionsStandings.vue';
 
   interface TeamCompetitionsProps {
     competitions: Competition[];
@@ -12,11 +15,32 @@
   const props = defineProps<TeamCompetitionsProps>();
 
   const selectedCompetition = ref<number | null>(null);
+  const standings = ref<Standings | null>(null);
+  const isLoading = ref(false);
+
+  const fetchStandings = async (competitionId: number) => {
+    isLoading.value = true;
+    try {
+      standings.value = await getCompetitionStandings(competitionId);
+    } catch (error) {
+      console.error('Error loading table:', error);
+      standings.value = null;
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
   const handleCompetitionClick = (competition: Competition) => {
-    selectedCompetition.value = competition.id;
-    console.log('Selected competition:', competition);
+    if (selectedCompetition.value !== competition.id) {
+      selectedCompetition.value = competition.id;
+    }
   };
+
+  watch(selectedCompetition, (newCompetitionId) => {
+    if (newCompetitionId !== null) {
+      fetchStandings(newCompetitionId);
+    }
+  });
 
   onMounted(() => {
     if (props.competitions.length > 0) {
@@ -44,6 +68,13 @@
         </div>
       </app-container>
     </app-underlay>
+
+    <div v-if="selectedCompetition !== null">
+      <team-competitions-standings 
+        :standings="standings" 
+        :is-loading="isLoading"
+      />
+    </div>
   </div>
 </template>
 
