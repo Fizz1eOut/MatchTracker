@@ -94,4 +94,14 @@
   .competition__item {
     flex: 0 1 auto;
   }
+  @media (max-width: 600px) {
+    .competitions__list {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .competition__item {
+      flex-shrink: 0;
+      min-width: 150px;
+    }
+  }
 </style>

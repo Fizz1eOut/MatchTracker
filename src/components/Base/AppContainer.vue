@@ -60,7 +60,7 @@
       padding: 16px;
     }
     .size-xl {
-      padding: 20px;
+      padding: 16px;
     }
   }
 </style>

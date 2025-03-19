@@ -22,7 +22,7 @@
 
 <template>
   <app-underlay class="competition__underlay">
-    <app-container>
+    <app-container class="competition__container">
       <app-button 
         class="competition__row" 
         @click="handleClick"
@@ -55,7 +55,7 @@
     opacity: 1;
   }
   .competition__name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--color-gray);
     transition: color 0.3s ease-in-out;
@@ -65,8 +65,6 @@
   }
   .competition__emblem {
     background-color: var(--color-white);
-    width: 30px;
-    height: 30px;
     filter: grayscale(100%);
     opacity: 0.6;
     transition: filter 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -74,5 +72,13 @@
   .competition__row:hover .competition__emblem {
     filter: grayscale(0);
     opacity: 1;
+  }
+  @media (max-width: 600px) {
+    .competition__container {
+      padding: 10px;
+    }
+    .competition__name {
+      font-size: 14px;
+    }
   }
 </style>
