@@ -1,9 +1,10 @@
 <script setup lang="ts">
-  import { ref, computed, onMounted, onUnmounted } from 'vue';
+  import { computed } from 'vue';
   import type { Standings } from '@/interface/standings.interface';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
   import AppTable from '@/components/Base/AppTable.vue';
   import AppImage from '@/components/Base/AppImage.vue';
+  import { useMediaQuery } from '@/composables/useMediaQuery';
 
   interface CompetitionStandingsProps {
     standings: Standings | null;
@@ -45,24 +46,16 @@
     }));
   });
 
-  const screenWidth = ref(window.innerWidth);
-  const updateScreenWidth = () => {
-    screenWidth.value = window.innerWidth;
-  };
-
-  onMounted(() => {
-    window.addEventListener('resize', updateScreenWidth);
-  });
-
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateScreenWidth);
-  });
+  const { isMobile: isSmallScreen } = useMediaQuery('(max-width: 526px)');
+  const { isMobile: isMediumScreen } = useMediaQuery('(max-width: 630px)');
 
   const visibleColumns = computed(() => {
-    if (screenWidth.value <= 526) {
-      return columns.filter(col => ['position', 'name', 'playedGames', 'won', 'points'].includes(col.key));
-    } else if (screenWidth.value <= 630) {
-      return columns.filter(col => !['goalsFor', 'goalsAgainst'].includes(col.key));
+    if (isSmallScreen.value) {
+      return columns.filter((col) =>
+        ['position', 'name', 'playedGames', 'won', 'points'].includes(col.key)
+      );
+    } else if (isMediumScreen.value) {
+      return columns.filter((col) => !['goalsFor', 'goalsAgainst'].includes(col.key));
     }
     return columns;
   });
