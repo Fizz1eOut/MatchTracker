@@ -1,15 +1,25 @@
 <script setup lang="ts">
+  import { ref } from 'vue';
   import type { Team } from '@/interface/teams.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppSubtitle from '@/components/Base/AppSubtitle.vue';
   import AppImage from '@/components/Base/AppImage.vue';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
+  import AppButton from '@/components/Base/AppButton.vue';
+  import { useMediaQuery } from '@/composables/useMediaQuery';
 
   interface TeamProfileProps {
     team: Team | null;
   }
   defineProps<TeamProfileProps>();
+
+  const { isMobile } = useMediaQuery('(max-width: 768px)');
+  
+  const toggle = ref(false);
+  const handleClick = () => {
+    toggle.value = !toggle.value;
+  };
 </script>
 
 <template>
@@ -37,8 +47,16 @@
                 <span>Official website:</span>
                 <a :href="team.website" target="_blank" class="club-website line">{{ team.website }}</a>
               </div>
+
+              <app-button 
+                v-if="isMobile"
+                @click="handleClick"
+                class="team-profile__button"
+              >
+                {{ toggle ? 'Hide' : 'Show more' }}
+              </app-button>
             </div>
-            <div class="team-profile__info team-profile__item">
+            <div v-if="!isMobile || toggle" class="team-profile__info team-profile__item">
               <div><span>Address:</span> {{ team.address }}</div>
               <div><span>Year of foundation:</span> {{ team.founded }} year</div>
               <div><span>Stadium:</span> {{ team.venue }}</div>
@@ -110,6 +128,56 @@
     font-weight: 400;
     color: var(--color-white);
   }
-  .club-website {
+  @media (max-width: 991px) {
+    .team-profile__body {
+      gap: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    .team-profile__group {
+      flex-direction: column;
+      align-items: start;
+      gap: 20px;
+    }
+    .team-profile__button {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-yellow);
+    }
+    .team-profile__website a {
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 499px) {
+    .team-profile__logo {
+      width: 100px;
+      height: 100px;
+    }
+    .team-profile__info,
+    .team-profile__website,
+    .team-profile__country {
+      font-size: 16px;
+    }
+    .team-profile__flag {
+      width: 30px;
+      height: 30px;
+    }
+    .team-profile__body {
+      align-items: start;
+      padding: 0;
+    }
+  }
+  @media (max-width: 360px) {
+    .team-profile__body {
+      flex-direction: column;
+      align-items: center;
+    }
+    .team-profile__item {
+      justify-content: center;
+      text-align: center;
+    }
+    .team-profile__country {
+      justify-content: center;
+    }
   }
 </style>
