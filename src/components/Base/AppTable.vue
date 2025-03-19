@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { useRoute } from 'vue-router';
+
   interface Column {
     label: string;
     key: string;
@@ -18,6 +20,11 @@
       props.onRowClick(row);
     }
   };
+
+  const route = useRoute();
+  const selectedId = Number(route.params.id);
+  const isSelected = (id: unknown): boolean => Number(id) === selectedId;
+
 </script>
 
 <template>
@@ -36,8 +43,9 @@
       <div
         v-for="(row, rowIndex) in props.data"
         :key="rowIndex"
-        class="the-table__item"
+        :class="{ selected: isSelected(row.id) }"
         @click="onRowClick(row)"
+        class="the-table__item"
       >
         <div
           v-for="column in props.columns"
@@ -61,6 +69,11 @@
 </template>
 
 <style scoped>
+  .selected {
+    background-color: var(--color-secondary-underlay);
+    cursor: pointer;
+    border-radius: 10px;
+  }
   .the-table {
     display: grid;
     gap: 10px;

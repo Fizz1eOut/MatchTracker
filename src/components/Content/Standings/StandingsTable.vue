@@ -31,6 +31,7 @@
     const [standings] = props.standings.standings;
 
     return standings.table.map(item => ({
+      id: item.team.id,
       position: item.position,
       name: item.team.name,
       playedGames: item.playedGames,

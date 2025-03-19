@@ -7,7 +7,7 @@
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
   import TeamCompetitionsItem from '@/components/Content/TeamDetails/TeamCompetitionsItem.vue';
-  import TeamCompetitionsStandings from '@/components/Content/TeamDetails/TeamCompetitionsStandings.vue';
+  import StandingsTable from '@/components/Content/Standings/StandingsTable.vue';
 
   interface TeamCompetitionsProps {
     competitions: Competition[];
@@ -22,6 +22,7 @@
     isLoading.value = true;
     try {
       standings.value = await getCompetitionStandings(competitionId);
+      console.log('Loaded standings:', standings.value);
     } catch (error) {
       console.error('Error loading table:', error);
       standings.value = null;
@@ -70,7 +71,7 @@
     </app-underlay>
 
     <div v-if="selectedCompetition !== null">
-      <team-competitions-standings 
+      <standings-table
         :standings="standings" 
         :is-loading="isLoading"
       />
