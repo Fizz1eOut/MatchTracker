@@ -13,7 +13,7 @@ export const getLeagues = async (): Promise<League[]> => {
   const response = await fetchData<{ competitions: League[] }>(API_URL);
 
   if (!response || !response.competitions) {
-    throw new Error('Неверный формат ответа API');
+    throw new Error('Invalid API response format');
   }
 
   return response.competitions;

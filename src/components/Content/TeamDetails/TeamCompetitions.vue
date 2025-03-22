@@ -8,6 +8,7 @@
   import AppContainer from '@/components/Base/AppContainer.vue';
   import TeamCompetitionsItem from '@/components/Content/TeamDetails/TeamCompetitionsItem.vue';
   import StandingsTable from '@/components/Content/Standings/StandingsTable.vue';
+  import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
 
   interface TeamCompetitionsProps {
     competitions: Competition[];
@@ -76,6 +77,8 @@
         :is-loading="isLoading"
       />
     </div>
+
+    <team-matches v-if="selectedCompetition !== null" :competition-id="selectedCompetition.toString()" />
   </div>
 </template>
 
