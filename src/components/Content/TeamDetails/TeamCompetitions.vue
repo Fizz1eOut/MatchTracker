@@ -2,7 +2,7 @@
   import { ref, onMounted, watch } from 'vue';
   import { getCompetitionStandings } from '@/api/competitions';
   import type { Standings } from '@/interface/standings.interface';
-  import type { Competition } from '@/interface/teams.interface';
+  import type { Team } from '@/interface/teams.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
@@ -11,9 +11,10 @@
   import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
 
   interface TeamCompetitionsProps {
-    competitions: Competition[];
+    team: Team;
   }
   const props = defineProps<TeamCompetitionsProps>();
+  console.log('props', props);
 
   const selectedCompetition = ref<number | null>(null);
   const standings = ref<Standings | null>(null);
@@ -32,9 +33,9 @@
     }
   };
 
-  const handleCompetitionClick = (competition: Competition) => {
-    if (selectedCompetition.value !== competition.id) {
-      selectedCompetition.value = competition.id;
+  const handleCompetitionClick = (competitionId: number) => {
+    if (selectedCompetition.value !== competitionId) {
+      selectedCompetition.value = competitionId;
     }
   };
 
@@ -45,14 +46,14 @@
   });
 
   onMounted(() => {
-    if (props.competitions.length > 0) {
-      selectedCompetition.value = props.competitions[0].id;
+    if (props.team?.runningCompetitions?.length > 0) {
+      selectedCompetition.value = props.team.runningCompetitions[0].id;
     }
   });
 </script>
 
 <template>
-  <div v-if="competitions.length" class="competitions">
+  <div v-if="team?.runningCompetitions?.length" class="competitions">
     <app-title class="competitions__title">
       Tournament table
     </app-title>
@@ -60,25 +61,26 @@
       <app-container size="sm">
         <div class="competitions__list">
           <team-competitions-item 
-            v-for="competition in competitions"
+            v-for="competition in props.team?.runningCompetitions"
             :key="competition.id"
             :competition="competition"
             :is-selected="competition.id === selectedCompetition"
-            @click="handleCompetitionClick"
+            @click="handleCompetitionClick(competition.id)"
             class="competition__item" 
           />
         </div>
       </app-container>
     </app-underlay>
 
-    <div v-if="selectedCompetition !== null">
-      <standings-table
-        :standings="standings" 
-        :is-loading="isLoading"
-      />
-    </div>
+    <standings-table
+      v-if="selectedCompetition !== null"
+      :standings="standings" 
+      :is-loading="isLoading"
+    />
+    <div>
+      <team-matches v-if="selectedCompetition !== null" :competition-id="selectedCompetition.toString()" />
 
-    <team-matches v-if="selectedCompetition !== null" :competition-id="selectedCompetition.toString()" />
+    </div>
   </div>
 </template>
 

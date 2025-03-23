@@ -12,7 +12,7 @@
 <template>
   <div v-if="team" class="team-details">
     <team-profile :team="team" />
-    <team-competitions :competitions="team.runningCompetitions" />
+    <team-competitions :team="team" />
   </div>
 </template>
 
