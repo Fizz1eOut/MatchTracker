@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
+  import { ref, watch } from 'vue';
 
   interface Column {
     label: string;
@@ -22,9 +23,15 @@
   };
 
   const route = useRoute();
-  const selectedId = Number(route.params.id);
-  const isSelected = (id: unknown): boolean => Number(id) === selectedId;
+  const selectedId = ref(Number(route.params.id));
+  const isSelected = (id: unknown): boolean => Number(id) === selectedId.value;
 
+  watch(
+    () => route.params.id,
+    (newId) => {
+      selectedId.value = Number(newId);
+    }
+  );
 </script>
 
 <template>
