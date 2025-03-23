@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { getTeamById } from '@/api/teams';
   import type { Team } from '@/interface/teams.interface';
@@ -21,6 +21,15 @@
       isLoading.value = false;
     }
   };
+
+  watch(
+    () => route.params.id,
+    (newId) => {
+      if (newId) {
+        fetchTeam(newId as string);
+      }
+    }
+  );
 
   onMounted(() => {
     fetchTeam(route.params.id as string);
