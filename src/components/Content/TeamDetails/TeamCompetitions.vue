@@ -14,7 +14,6 @@
     team: Team;
   }
   const props = defineProps<TeamCompetitionsProps>();
-  console.log('props', props);
 
   const selectedCompetition = ref<number | null>(null);
   const standings = ref<Standings | null>(null);
@@ -79,7 +78,6 @@
     />
     <div>
       <team-matches v-if="selectedCompetition !== null" :competition-id="selectedCompetition.toString()" />
-
     </div>
   </div>
 </template>
