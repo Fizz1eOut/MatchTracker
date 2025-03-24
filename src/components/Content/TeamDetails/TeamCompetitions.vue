@@ -6,7 +6,7 @@
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
-  import TeamCompetitionsItem from '@/components/Content/TeamDetails/TeamCompetitionsItem.vue';
+  import TeamLeagues from '@/components/Content/TeamDetails/TeamLeagues.vue';
   import StandingsTable from '@/components/Content/Standings/StandingsTable.vue';
   import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
 
@@ -59,12 +59,10 @@
     <app-underlay>
       <app-container size="sm">
         <div class="competitions__list">
-          <team-competitions-item 
-            v-for="competition in props.team?.runningCompetitions"
-            :key="competition.id"
-            :competition="competition"
-            :is-selected="competition.id === selectedCompetition"
-            @click="handleCompetitionClick(competition.id)"
+          <team-leagues 
+            :competition="team.runningCompetitions"
+            :selectedCompetition="selectedCompetition"
+            @select="handleCompetitionClick"
             class="competition__item" 
           />
         </div>
