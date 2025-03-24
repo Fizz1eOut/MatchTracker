@@ -4,6 +4,8 @@
   import { getMatches } from '@/api/matches';
   import type { Match } from '@/interface/matches.interface';
   import MatchItem from '@/components/Content/MatchList/MatchItem.vue';
+  import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
+  import AppTitle from '@/components/Base/AppTitle.vue';
 
   interface TeamMatchesProps {
     competitionId: string;
@@ -72,12 +74,10 @@
 </script>
 
 <template>
-  <div class="team-matches">
-    <h2>Матчи команды</h2>
-    
-    <div v-if="isLoading">Загрузка...</div>
-    
-    <ul v-else-if="teamMatches.length">
+  <app-loading-spinner v-if="isLoading" />
+  <div v-else-if="teamMatches.length" class="team-matches">
+    <app-title>Team matches</app-title>
+    <ul class="team-matches__list">
       <match-item 
         v-for="match in teamMatches" 
         :key="match.id"
@@ -90,5 +90,10 @@
 </template>
 
 <style scoped>
-
+  .team-matches {
+    margin-top: 40px;
+  }
+  .team-matches__list {
+    margin-top: 20px;
+  }
 </style>
