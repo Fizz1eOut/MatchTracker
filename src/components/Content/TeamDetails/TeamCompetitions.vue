@@ -2,8 +2,6 @@
   import type { Team } from '@/interface/teams.interface';
   import type { Standings } from '@/interface/standings.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
-  import AppUnderlay from '@/components/Base/AppUnderlay.vue';
-  import AppContainer from '@/components/Base/AppContainer.vue';
   import TeamLeagues from '@/components/Content/TeamDetails/TeamLeagues.vue';
   import StandingsTable from '@/components/Content/Standings/StandingsTable.vue';
 
@@ -27,18 +25,14 @@
     <app-title class="competitions__title">
       Tournament table
     </app-title>
-    <app-underlay>
-      <app-container size="sm">
-        <div class="competitions__list">
-          <team-leagues 
-            :competition="team.runningCompetitions"
-            :selectedCompetition="selectedCompetition"
-            @select="handleCompetitionClick"
-            class="competition__item" 
-          />
-        </div>
-      </app-container>
-    </app-underlay>
+    <div class="competitions__list">
+      <team-leagues 
+        :competition="team.runningCompetitions"
+        :selectedCompetition="selectedCompetition"
+        @select="handleCompetitionClick"
+        class="competition__item" 
+      />
+    </div>
 
     <standings-table
       v-if="selectedCompetition !== null"
@@ -62,15 +56,5 @@
   }
   .competition__item {
     flex: 0 1 auto;
-  }
-  @media (max-width: 600px) {
-    .competitions__list {
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-    .competition__item {
-      flex-shrink: 0;
-      min-width: 150px;
-    }
   }
 </style>

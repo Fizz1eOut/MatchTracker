@@ -1,17 +1,17 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
-  import type { Competition } from '@/interface/teams.interface';
+  import type { Competition } from '@/interface/matches.interface';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
   import AppButton from '@/components/Base/AppButton.vue';
   import AppImage from '@/components/Base/AppImage.vue';
+  import AppSubtitle from '@/components/Base/AppSubtitle.vue';
 
   interface TeamLeaguesProps {
     competition: Competition[];
     selectedCompetition: number | null;
   }
   const props = defineProps<TeamLeaguesProps>();
-
   const emit = defineEmits<{
     (event: 'select', competitionId: number): void;
   }>();
@@ -30,32 +30,48 @@
 
 <template>
   <div class="team-leagues">
-    <ul class="team-leagues__list">
-      <li
-        v-for="comp in competition"
-        :key="comp.id"
-        class="team-leagues__item"
-      >
-        <app-underlay class="team-leagues__underlay">
-          <app-container class="team-leagues__container">
-            <app-button 
-              class="team-leagues__row"
-              @click="handleCompetitionClick(comp.id)"
-              :class="{ 'selected': comp.id === selectedCompetition }"
-            >
-              <app-image :imageUrl="comp.emblem || ''" class="team-leagues__emblem" />
-              <div class="team-leagues__name">
-                {{ comp.name }}
-              </div>
-            </app-button>
-          </app-container>
-        </app-underlay>
-      </li>
-    </ul>
+    <app-subtitle class="team-leagues__subtitle">
+      List of available leagues
+    </app-subtitle>
+    <app-underlay>
+      <app-container size="sm" class="team-leagues__container">
+        <ul class="team-leagues__list">
+          <li
+            v-for="comp in competition"
+            :key="comp.id"
+            class="team-leagues__item"
+          >
+            <app-underlay class="team-leagues__underlay">
+              <app-container class="team-leagues__container">
+                <app-button 
+                  class="team-leagues__row"
+                  @click="handleCompetitionClick(comp.id)"
+                  :class="{ 'selected': comp.id === selectedCompetition }"
+                >
+                  <app-image :imageUrl="comp.emblem || ''" class="team-leagues__emblem" />
+                  <div class="team-leagues__name">
+                    {{ comp.name }}
+                  </div>
+                </app-button>
+              </app-container>
+            </app-underlay>
+          </li>
+        </ul>
+      </app-container>
+    </app-underlay>
   </div>
 </template>
 
 <style scoped>
+  .team-leagues {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin-bottom: 20px;
+  }
+  .team-leagues__subtitle {
+    margin-bottom: 10px;
+  }
   .team-leagues__underlay {
     background-color: var(--color-secondary-underlay);
   }
@@ -102,6 +118,17 @@
     }
     .team-leagues__name {
       font-size: 14px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .team-leagues__list {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .team-leagues__item {
+      flex-shrink: 0;
+      min-width: 150px;
     }
   }
 </style>
