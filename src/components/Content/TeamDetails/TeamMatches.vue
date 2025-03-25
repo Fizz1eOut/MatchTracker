@@ -2,15 +2,22 @@
   import { ref, computed, watch } from 'vue';
   import { useRoute } from 'vue-router';
   import { getMatches } from '@/api/matches';
-  import type { Match } from '@/interface/matches.interface';
+  import type { Match, Team } from '@/interface/matches.interface';
   import MatchItem from '@/components/Content/MatchList/MatchItem.vue';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
   import AppTitle from '@/components/Base/AppTitle.vue';
+  import TeamLeagues from '@/components/Content/TeamDetails/TeamLeagues.vue';
 
   interface TeamMatchesProps {
-    competitionId: string;
+    team: Team | null;
+    selectedCompetition: number | null;
   }
   const props = defineProps<TeamMatchesProps>();
+  const emit = defineEmits<{ (event: 'selectCompetition', competitionId: number): void }>();
+
+  const handleCompetitionClick = (competitionId: number) => {
+    emit('selectCompetition', competitionId);
+  };
 
   const route = useRoute();
   const matches = ref<Match[]>([]);
@@ -66,9 +73,9 @@
       .sort((a, b) => new Date(b.utcDate).getTime() - new Date(a.utcDate).getTime())
   );
 
-  watch(() => props.competitionId, (newCompetitionId) => {
+  watch(() => props.selectedCompetition, (newCompetitionId) => {
     if (newCompetitionId) {
-      fetchMatches(newCompetitionId);
+      fetchMatches(newCompetitionId.toString());
     }
   }, { immediate: true });
 </script>
@@ -76,6 +83,13 @@
 <template>
   <app-loading-spinner v-if="isLoading" />
   <div v-else-if="teamMatches.length" class="team-matches">
+    <team-leagues 
+      v-if="team?.runningCompetitions?.length"
+      :competition="team.runningCompetitions"
+      :selectedCompetition="selectedCompetition"
+      @select="handleCompetitionClick"
+    />
+
     <app-title>Team matches</app-title>
     <ul class="team-matches__list">
       <match-item 

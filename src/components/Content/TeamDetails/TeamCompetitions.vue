@@ -1,54 +1,25 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch } from 'vue';
-  import { getCompetitionStandings } from '@/api/competitions';
-  import type { Standings } from '@/interface/standings.interface';
   import type { Team } from '@/interface/teams.interface';
+  import type { Standings } from '@/interface/standings.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppUnderlay from '@/components/Base/AppUnderlay.vue';
   import AppContainer from '@/components/Base/AppContainer.vue';
   import TeamLeagues from '@/components/Content/TeamDetails/TeamLeagues.vue';
   import StandingsTable from '@/components/Content/Standings/StandingsTable.vue';
-  import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
 
   interface TeamCompetitionsProps {
     team: Team;
+    selectedCompetition: number | null;
+    standings: Standings | null;
+    isLoading: boolean;
   }
-  const props = defineProps<TeamCompetitionsProps>();
+  defineProps<TeamCompetitionsProps>();
 
-  const selectedCompetition = ref<number | null>(null);
-  const standings = ref<Standings | null>(null);
-  const isLoading = ref(false);
-
-  const fetchStandings = async (competitionId: number) => {
-    isLoading.value = true;
-    try {
-      standings.value = await getCompetitionStandings(competitionId);
-      console.log('Loaded standings:', standings.value);
-    } catch (error) {
-      console.error('Error loading table:', error);
-      standings.value = null;
-    } finally {
-      isLoading.value = false;
-    }
-  };
+  const emit = defineEmits<{ (event: 'selectCompetition', competitionId: number): void }>();
 
   const handleCompetitionClick = (competitionId: number) => {
-    if (selectedCompetition.value !== competitionId) {
-      selectedCompetition.value = competitionId;
-    }
+    emit('selectCompetition', competitionId);
   };
-
-  watch(selectedCompetition, (newCompetitionId) => {
-    if (newCompetitionId !== null) {
-      fetchStandings(newCompetitionId);
-    }
-  });
-
-  onMounted(() => {
-    if (props.team?.runningCompetitions?.length > 0) {
-      selectedCompetition.value = props.team.runningCompetitions[0].id;
-    }
-  });
 </script>
 
 <template>
@@ -74,9 +45,6 @@
       :standings="standings" 
       :is-loading="isLoading"
     />
-    <div>
-      <team-matches v-if="selectedCompetition !== null" :competition-id="selectedCompetition.toString()" />
-    </div>
   </div>
 </template>
 
