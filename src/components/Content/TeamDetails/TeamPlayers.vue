@@ -140,9 +140,25 @@
     font-size: 12px;
     color: var(--color-gray);
   }
-  @media (max-width: 499px) {
+  @media (max-width: 768px) {
     .player-card__name {
       font-size: 18px;
+    }
+    .team-players__item {
+      max-width: 240px;
+    }
+    .player__group {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  @media (max-width: 531px) {
+    .player__group {
+      flex-direction: row;
+      justify-content: center;
+    }
+    .team-players__item {
+      max-width: 100%;
     }
   }
 </style>
