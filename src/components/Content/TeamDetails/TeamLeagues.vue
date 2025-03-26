@@ -108,10 +108,10 @@
     filter: grayscale(0);
     opacity: 1;
   }
-  @media (max-width: 600px) {
-    .team-leagues__container {
+  .team-leagues__container {
       padding: 10px;
     }
+  @media (max-width: 600px) {
     .team-leagues__name {
       font-size: 14px;
     }

@@ -8,7 +8,7 @@
 </template>
 <style scoped>
 .subtitle {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 24px;
   line-height: 120%;
   color: var(--color-white);
@@ -16,7 +16,6 @@
 }  
 @media (max-width: 499.98px) {
   .subtitle {
-    font-weight: 600;
     font-size: 18px;
   }  
 }

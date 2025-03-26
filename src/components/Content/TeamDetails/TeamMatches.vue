@@ -81,16 +81,20 @@
 </script>
 
 <template>
-  <app-loading-spinner v-if="isLoading" />
+  <app-loading-spinner
+    v-if="isLoading"
+    size="60px"
+    height="100vh"
+  />
   <div v-else-if="teamMatches.length" class="team-matches">
+    <app-title>Team matches</app-title>
+
     <team-leagues 
       v-if="team?.runningCompetitions?.length"
       :competition="team.runningCompetitions"
       :selectedCompetition="selectedCompetition"
       @select="handleCompetitionClick"
     />
-
-    <app-title>Team matches</app-title>
     <ul class="team-matches__list">
       <match-item 
         v-for="match in teamMatches" 
