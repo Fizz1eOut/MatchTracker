@@ -33,32 +33,28 @@
     <app-subtitle class="team-leagues__subtitle">
       List of available leagues
     </app-subtitle>
-    <app-underlay>
-      <app-container size="sm" class="team-leagues__container">
-        <ul class="team-leagues__list">
-          <li
-            v-for="comp in competition"
-            :key="comp.id"
-            class="team-leagues__item"
-          >
-            <app-underlay class="team-leagues__underlay">
-              <app-container class="team-leagues__container">
-                <app-button 
-                  class="team-leagues__row"
-                  @click="handleCompetitionClick(comp.id)"
-                  :class="{ 'selected': comp.id === selectedCompetition }"
-                >
-                  <app-image :imageUrl="comp.emblem || ''" class="team-leagues__emblem" />
-                  <div class="team-leagues__name">
-                    {{ comp.name }}
-                  </div>
-                </app-button>
-              </app-container>
-            </app-underlay>
-          </li>
-        </ul>
-      </app-container>
-    </app-underlay>
+    <ul class="team-leagues__list">
+      <li
+        v-for="comp in competition"
+        :key="comp.id"
+        class="team-leagues__item"
+      >
+        <app-underlay class="team-leagues__underlay">
+          <app-container class="team-leagues__container">
+            <app-button 
+              class="team-leagues__row"
+              @click="handleCompetitionClick(comp.id)"
+              :class="{ 'selected': comp.id === selectedCompetition }"
+            >
+              <app-image :imageUrl="comp.emblem || ''" class="team-leagues__emblem" />
+              <div class="team-leagues__name">
+                {{ comp.name }}
+              </div>
+            </app-button>
+          </app-container>
+        </app-underlay>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -70,7 +66,7 @@
     margin-bottom: 20px;
   }
   .team-leagues__subtitle {
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
   .team-leagues__underlay {
     background-color: var(--color-secondary-underlay);
