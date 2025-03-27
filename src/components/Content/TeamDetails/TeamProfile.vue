@@ -145,7 +145,12 @@
       color: var(--color-yellow);
     }
     .team-profile__website a {
-      margin-left: 0;
+      display: inline-block;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
     }
   }
   @media (max-width: 499px) {
@@ -165,6 +170,9 @@
     .team-profile__body {
       align-items: start;
       padding: 0;
+    }
+    .team-profile__website a { 
+      max-width: 150px;
     }
   }
   @media (max-width: 360px) {
