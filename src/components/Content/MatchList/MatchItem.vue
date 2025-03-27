@@ -2,7 +2,6 @@
   import type { Match } from '@/interface/matches.interface';
   import AppImage from '@/components/Base/AppImage.vue';
   import AppDivider from '@/components/Base/AppDivider.vue';
-  import { getTeamById } from '@/api/teams';
   import { useRouter } from 'vue-router';
 
   interface MatchItemProps {
@@ -41,16 +40,10 @@
   };
 
   const router = useRouter();
-  const goToTeamPage = async (teamId: number) => {
-    try {
-      const team = await getTeamById(String(teamId));
-    
-      if (team) {
-        router.push(`/team/${teamId}`);
-      }
-    } catch (error) {
-      console.error(`Error loading command ${teamId}:`, error);
-      alert('Error loading command. The page will not open.');
+  const goToTeamPage = (teamId?: number) => {
+
+    if (teamId) {
+      router.push( {name: 'team', params: {id: teamId}});
     }
   };
 </script>
@@ -81,7 +74,7 @@
             :alt="match.homeTeam.name" 
             class="logo"
           />
-          <div class="match__team">{{ match.homeTeam.name }}</div>
+          <div class="match__team line">{{ match.homeTeam.name }}</div>
         </div> 
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
           <div class="match__score">
@@ -104,7 +97,7 @@
             :alt="match.homeTeam.name" 
             class="logo"
           />
-          <div class="match__team">{{ match.awayTeam.name }}</div>
+          <div class="match__team line">{{ match.awayTeam.name }}</div>
         </div>
 
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
@@ -131,7 +124,7 @@
   }
   .match-item:hover {
     cursor: pointer;
-    background-color: var(--color-secondary-underlay);
+    background-color: var(--color-underlay);
   }
   .match-item__info {
     max-width: 40px;
