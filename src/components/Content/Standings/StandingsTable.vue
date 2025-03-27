@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { useRouter } from 'vue-router';
   import { computed } from 'vue';
   import type { Standings } from '@/interface/standings.interface';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
@@ -59,6 +60,14 @@
     }
     return columns;
   });
+
+  const router = useRouter();
+  const goToTeamPage =  (row: Record<string, unknown>) => {
+    const id = row.id as string | number;
+    if (id) {
+      router.push({ name: 'team', params: { id: String(id) } });
+    }
+  };
 </script>
 
 <template>
@@ -72,6 +81,7 @@
       v-else-if="standings" 
       :columns="visibleColumns"
       :data="tableData"
+      :onRowClick="goToTeamPage"
     >
       <template #name="{ row }">
         <div class="standings__row">
