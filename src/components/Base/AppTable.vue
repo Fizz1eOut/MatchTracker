@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
-  import { ref, watch } from 'vue';
+  import type { Team } from '@/interface/standings.interface';
+
+  interface TableRow {
+    id: number;
+    [key: string]: unknown;
+  }
 
   interface Column {
     label: string;
@@ -8,30 +13,22 @@
     slotName?: string;
   }
 
-  interface Table <T = Record<string, unknown>> {
-    data: T[];
+  interface TableProps {
+    data: TableRow[];
     columns: Column[];
-    onRowClick?: (row: T) => void;
   }
 
-  const props = defineProps<Table<Record<string, unknown>>>();
+  const props = defineProps<TableProps>();
 
-  const onRowClick = (row: Record<string, unknown>) => {
-    if (props.onRowClick) {
-      props.onRowClick(row);
-    }
+  const emit = defineEmits<{
+    (e: 'row-click', row: Pick<Team, 'id'>): void;
+  }>();
+  const onRowClick = (row: { id: number }) => {
+    emit('row-click', row);
   };
 
   const route = useRoute();
-  const selectedId = ref(Number(route.params.id));
-  const isSelected = (id: unknown): boolean => Number(id) === selectedId.value;
-
-  watch(
-    () => route.params.id,
-    (newId) => {
-      selectedId.value = Number(newId);
-    }
-  );
+  const isSelected = (id: unknown): boolean => Number(id) === Number(route.params.id);
 </script>
 
 <template>
@@ -48,14 +45,14 @@
 
     <div class="the-table__body">
       <div
-        v-for="(row, rowIndex) in props.data"
+        v-for="(row, rowIndex) in data"
         :key="rowIndex"
         :class="{ selected: isSelected(row.id) }"
         @click="onRowClick(row)"
         class="the-table__item"
       >
         <div
-          v-for="column in props.columns"
+          v-for="column in columns"
           :key="column.key"
           class="the-table__column"
         >

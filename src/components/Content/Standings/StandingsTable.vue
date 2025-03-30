@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useRouter } from 'vue-router';
   import { computed } from 'vue';
-  import type { Standings } from '@/interface/standings.interface';
+  import type { Standings, Team } from '@/interface/standings.interface';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
   import AppTable from '@/components/Base/AppTable.vue';
   import AppImage from '@/components/Base/AppImage.vue';
@@ -32,18 +32,11 @@
 
     const [standings] = props.standings.standings;
 
-    return standings.table.map(item => ({
-      id: item.team.id,
-      position: item.position,
-      name: item.team.name,
-      playedGames: item.playedGames,
-      won: item.won,
-      draw: item.draw,
-      lost: item.lost,
-      points: item.points,
-      goalsFor: item.goalsFor,
-      goalsAgainst: item.goalsAgainst,
-      imageUrl: item.team.crest
+    return standings.table.map(({ team, ...rest }) => ({
+      ...rest,
+      id: team.id,
+      name: team.name,
+      imageUrl: team.crest,
     }));
   });
 
@@ -62,11 +55,8 @@
   });
 
   const router = useRouter();
-  const goToTeamPage =  (row: Record<string, unknown>) => {
-    const id = row.id as string | number;
-    if (id) {
-      router.push({ name: 'team', params: { id: String(id) } });
-    }
+  const goToTeamPage =  (row: Pick<Team, 'id'>) => {
+    router.push({ name: 'team', params: { id: row.id } });
   };
 </script>
 
@@ -81,7 +71,7 @@
       v-else-if="standings" 
       :columns="visibleColumns"
       :data="tableData"
-      :onRowClick="goToTeamPage"
+      @row-click="goToTeamPage"
     >
       <template #name="{ row }">
         <div class="standings__row">
