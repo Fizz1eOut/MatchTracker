@@ -34,8 +34,6 @@
 </template>
 
 <style scoped>
-  .news-card {
-  }
   .news-card__image {
     width: 100%;
   }
