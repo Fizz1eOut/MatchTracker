@@ -1,18 +1,26 @@
 <script setup lang="ts">
-  import { defineProps } from 'vue';
+  import { ref, watch } from 'vue';
 
   interface AppImageCoinProps {
-    imageUrl: string;
+    imageUrl?: string;
   }
-  defineProps<AppImageCoinProps>();
+  const props = defineProps<AppImageCoinProps>();
+
+  const hasError = ref(false);
+
+  // Сбрасываем ошибку при изменении imageUrl
+  watch(() => props.imageUrl, () => {
+    hasError.value = false;
+  });
 </script>
 
 <template>
   <img
-    v-if="imageUrl"
+    v-if="imageUrl && !hasError"
     class="image"
     :src="imageUrl"
     alt="Image"
+    @error="hasError = true"
   >
   <img
     v-else
@@ -26,5 +34,6 @@
 .image {
   width: 25px;
   height: 25px;
+  border-radius: 10px;
 }
 </style>
