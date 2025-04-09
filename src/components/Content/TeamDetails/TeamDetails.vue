@@ -8,6 +8,7 @@
   import TeamPlayers from '@/components/Content/TeamDetails/TeamPlayers.vue';
   import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
   import AppTabs from '@/components/Base/AppTabs.vue';
+  import NewsTeam from '@/components/Content/FootballNews/NewsTeam.vue';
 
   interface TeamDetailsProps {
     team: Team | null;
@@ -53,6 +54,7 @@
     { label: 'Tournament table', slotName: 'table' },
     { label: 'Team matches', slotName: 'matches' },
     { label: 'Squad', slotName: 'squad' },
+    { label: 'News', slotName: 'news' },
   ];
 </script>
 
@@ -81,6 +83,10 @@
 
       <template #squad>
         <team-players :team="team" />
+      </template>
+
+      <template #news>
+        <news-team :team="team" />
       </template>
     </app-tabs>
   </div>
