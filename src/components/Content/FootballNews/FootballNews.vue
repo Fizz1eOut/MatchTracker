@@ -14,12 +14,15 @@
   const fetchNews = async (page?: string) => {
     try {
       isLoading.value = true;
-      const scrollY = window.scrollY;
-      const response = await getNews(page);
+      const response = await getNews(undefined, page);
       newsList.value = [...newsList.value, ...response.results];
       
-      nextPage.value = response.nextPage;
+      const scrollY = window.scrollY;
       window.scrollTo({ top: scrollY, behavior: 'auto' });
+
+      nextPage.value = response.nextPage;
+      console.log('Loaded news:', newsList.value);
+      console.log('Next page:', nextPage.value);
     } catch (error) {
       console.error('Error loading news:', error);
     } finally {
