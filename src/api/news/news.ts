@@ -23,18 +23,20 @@ export const getNews = async (team?: string, page?: string): Promise<NewsRespons
     const response = await fetchData<NewsResponse>(url);
 
     const filteredNews: News[] = [];
-    const seenTitles = new Set<string>();
-    
+    const seenArticles = new Set<string>();
+
     for (const article of response.results) {
       const title = article.title?.toLowerCase().trim() || '';
       const description = article.description?.toLowerCase().trim() || '';
-    
-      if (!seenTitles.has(title) && (title.includes(team?.toLowerCase() || '') || description.includes(team?.toLowerCase() || ''))) {
-        seenTitles.add(title);
+      const identifier = `${title}-${description}`;
+
+      if ((title.includes(team?.toLowerCase() || '') || description.includes(team?.toLowerCase() || '')) 
+          && !seenArticles.has(identifier)) {
+        seenArticles.add(identifier);
         filteredNews.push(article);
       }
     }
-    
+
     return { ...response, results: filteredNews };
   } catch (error) {
     console.error('Error fetching news:', error);
