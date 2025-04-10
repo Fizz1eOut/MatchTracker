@@ -89,6 +89,7 @@
       </div>
     </div>
   </div>
+  <div v-else class="error">No news found for team: {{ props.team.shortName }}</div>
 </template>
 
 <style scoped>
@@ -115,6 +116,13 @@
   .btn {
     width: 160px;
     font-size: 20px;
+  }
+  .error {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 400px;
+    color: var(--color-white);
   }
   @media (max-width: 1252px) {
     .football-news__item {
