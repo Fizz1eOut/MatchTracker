@@ -1,13 +1,18 @@
 import { fetchData } from '@/modules/http';
-import type { Standings } from '@/interface/standings.interface';
+import type { Standings } from '@/interface/competitions.interface';
 
-const API_URL = 'https://vue-football-proxy.onrender.com/api/competitions';
+const BASE_URL = 'https://vue-football-proxy.onrender.com/api/competitions';
 
-export const getCompetitionStandings = async (competitionId: number): Promise<Standings> => {
-  if (!competitionId) {
-    throw new Error('Competition ID not specified');
+export const getCompetitionStandings = async (competitionId?: number): Promise<Standings> => {
+  const params = new URLSearchParams();
+
+  if (competitionId) {
+    params.append('competitionId', competitionId.toString());
   }
 
-  const url = `${API_URL}/${competitionId}/standings`;
+  const url = competitionId
+    ? `${BASE_URL}/${competitionId}/standings?${params.toString()}`
+    : `${BASE_URL}/standings?${params.toString()}`;
+
   return await fetchData<Standings>(url);
 };
