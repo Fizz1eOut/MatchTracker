@@ -3,10 +3,7 @@
   import AppContainer from '@/components/Base/AppContainer.vue';
   import AppNav from '@/components/Base/AppNav.vue';
   import AppNavMobile from '@/components/Base/AppNavMobile.vue';
-  import AppIcon from '@/components/Base/AppIcon.vue';
   import { useMediaQuery } from '@/composables/useMediaQuery';
-  import UserTime from '@/components/Base/UserTime.vue';
-  import AppBurger from '@/components/Base/AppBurger.vue';
 
   const open = ref<boolean>(false);
   const { isMobile } = useMediaQuery('(max-width: 768px)');
@@ -31,16 +28,7 @@
         <app-nav v-if="!isMobile" />
         <app-nav-mobile 
           v-if="isMobile"
-          :open="open"
-          @close="closeBurger"/>
-
-        <div class="header__actions">
-          <user-time />
-          <app-burger  
-            v-if="isMobile" 
-            :active="open" 
-            @change="open = $event" />
-        </div>
+        />
       </div>
     </app-container>
   </div>
