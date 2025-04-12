@@ -3,7 +3,7 @@
   import type { News } from '@/interface/news.interface';
   import { getNews } from '@/api/news/news';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
-  import NewsCard from '@/components/Content/FootballNews/NewsCard.vue';
+  import NewsCard from '@/components/Content/NewsFootball/NewsCard.vue';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppButton from '@/components/Base/AppButton.vue';
 
@@ -79,9 +79,6 @@
 </template>
 
 <style scoped>
-  .football-news {
-    margin-top: 40px
-  }
   .football-news__list {
     margin-top: 30px;
     display: flex;

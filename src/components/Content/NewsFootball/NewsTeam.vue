@@ -5,7 +5,7 @@
   import { getNews } from '@/api/news/news';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
-  import NewsCard from '@/components/Content/FootballNews/NewsCard.vue';
+  import NewsCard from '@/components/Content/NewsFootball/NewsCard.vue';
   import AppButton from '@/components/Base/AppButton.vue';
 
   interface NewsTeamProps {

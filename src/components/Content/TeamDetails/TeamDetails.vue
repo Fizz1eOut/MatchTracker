@@ -8,7 +8,7 @@
   import TeamPlayers from '@/components/Content/TeamDetails/TeamPlayers.vue';
   import TeamMatches from '@/components/Content/TeamDetails/TeamMatches.vue';
   import AppTabs from '@/components/Base/AppTabs.vue';
-  import NewsTeam from '@/components/Content/FootballNews/NewsTeam.vue';
+  import NewsTeam from '@/components/Content/NewsFootball/NewsTeam.vue';
 
   interface TeamDetailsProps {
     team: Team | null;
