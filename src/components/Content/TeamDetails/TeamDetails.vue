@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted, watch } from 'vue';
-  import { getCompetitionStandings } from '@/api/competitions';
+  import { getCompetitionStandings } from '@/api/standings';
   import type { Standings } from '@/interface/standings.interface';
   import type { Team } from '@/interface/teams.interface';
   import TeamProfile from '@/components/Content/TeamDetails/TeamProfile.vue';
