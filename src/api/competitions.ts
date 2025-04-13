@@ -1,18 +1,9 @@
 import { fetchData } from '@/modules/http';
-import type { Standings } from '@/interface/competitions.interface';
+import type { CompetitionsResponse  } from '@/interface/сompetitions.interface';
 
 const BASE_URL = 'https://vue-football-proxy.onrender.com/api/competitions';
 
-export const getCompetitionStandings = async (competitionId?: number): Promise<Standings> => {
-  const params = new URLSearchParams();
-
-  if (competitionId) {
-    params.append('competitionId', competitionId.toString());
-  }
-
-  const url = competitionId
-    ? `${BASE_URL}/${competitionId}/standings?${params.toString()}`
-    : `${BASE_URL}/standings?${params.toString()}`;
-
-  return await fetchData<Standings>(url);
+export const getCompetitions = async (): Promise<CompetitionsResponse> => {
+  const url = `${BASE_URL}`;
+  return await fetchData<CompetitionsResponse>(url);
 };
