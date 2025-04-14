@@ -2,6 +2,8 @@
   import type { Competition } from '@/interface/сompetitions.interface';
   import AppImage from '@/components/Base/AppImage.vue';
   import AppTitle from '@/components/Base/AppTitle.vue';
+  import AppUnderlay from '@/components/Base/AppUnderlay.vue';
+  import AppContainer from '@/components/Base/AppContainer.vue';
 
   interface CompetetionListProps {
     competitions: Competition[];
@@ -19,8 +21,14 @@
         :key="competition.id"
         class="competitions-list__item"
       >
-        <app-image :image-url="competition.emblem" class="competition__img" />
-        <div class="competition__name">{{ competition.name }}</div>
+        <app-underlay>
+          <app-container>
+            <div class="competition">
+              <app-image :image-url="competition.emblem" class="competition__img" />
+              <div class="competition__name">{{ competition.name }}</div>
+            </div>
+          </app-container>
+        </app-underlay>
       </div>
     </div>
   </div>
@@ -37,7 +45,8 @@
     flex-wrap: wrap;
   }
   .competitions-list__item {
-    flex: 0 1 200px
+    flex: 0 1 200px;
+    height: 250px;
   }
   .competitions-list__item {
     position: relative;
@@ -64,15 +73,51 @@
   .competitions-list__item:hover::before {
     left: 100%;
   }
+  .competition {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
   .competition__img {
     width: 100%;
     height: 150px;
   }
   .competition__name {
-    margin-top: 10px;
     text-align: center;
     font-size: 18px;
     font-weight: 400;
     color: var(--color-white)
     }
-</style>
+    @media (max-width: 768px) {
+      .competitions-list__items {
+        justify-content: space-around;
+      }
+      .competitions-list__item {
+        height: 200px;
+      }
+      .competition__name {
+        font-size: 14px;
+      }
+      .competition {
+        height: 170px;
+      }
+      .competition__img {
+        height: 120px;
+      }
+    }
+    @media (max-width: 442px) {
+      .competitions-list__item {
+        flex: 0 1 260px;
+        height: 250px;
+      }
+      .competition {
+        height: 200px;
+      }
+      .competition__img {
+        width: 150px;
+        height: 150px;
+      }
+    }
+</style>  
