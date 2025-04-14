@@ -2,7 +2,7 @@
   import { ref, onMounted } from 'vue';
   import type { Competition } from '@/interface/сompetitions.interface';
   import { getCompetitions} from '@/api/competitions';
-  import CompetitionList from '@/components/Content/Competition/CompetitionList.vue';
+  import CompetitionsList from '@/components/Content/Competition/CompetitionsList.vue';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
 
   const isLoading = ref(true);
@@ -34,7 +34,7 @@
     height="100vh"
   />
   <div v-else>
-    <competition-list v-if="competitions" :competitions="competitions" />
+    <competitions-list v-if="competitions" :competitions="competitions" />
   </div>
 </template>
 
