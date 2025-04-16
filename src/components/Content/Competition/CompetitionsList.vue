@@ -1,16 +1,33 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
   import type { Competition } from '@/interface/сompetitions.interface';
   import AppTitle from '@/components/Base/AppTitle.vue';
   import CompetitionItem from '@/components/Content/Competition/CompetitionItem.vue';
+  import CompetitionDetails from '@/components/Content/Competition/CompetitionDetails.vue';
 
   interface CompetetionListProps {
     competitions: Competition[];
   }
   const props = defineProps<CompetetionListProps>();
+
+  const router = useRouter();
+  const route = useRoute();
+
+  function openCompetition(id: number) {
+    router.push({ query: { ...route.query, id } });
+  } 
+
+  const selectedCompetition = computed(() => {
+    const id = route.query.id;
+    if (!id) return undefined;
+    return props.competitions.find(item => item.id === Number(id));
+  });
+
 </script>
 
 <template>
-  <div class="competitions-list">
+  <div v-if="!selectedCompetition" class="competitions-list">
     <app-title>Competitions</app-title>
 
     <div class="competitions-list__items">
@@ -18,11 +35,17 @@
         v-for="competition in props.competitions" 
         :key="competition.id"
         class="competitions-list__item"
+        @click="openCompetition(competition.id)"
       >
         <competition-item :competition="competition" />
       </div>
     </div>
   </div>
+
+  <competition-details 
+    v-if="selectedCompetition"
+    :competition="selectedCompetition"
+  />
 </template>
 
 <style scoped>
