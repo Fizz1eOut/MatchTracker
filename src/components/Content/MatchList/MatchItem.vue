@@ -74,7 +74,7 @@
             :alt="match.homeTeam.name" 
             class="logo"
           />
-          <div class="match__team line">{{ match.homeTeam.name }}</div>
+          <div class="match__team line">{{ match.homeTeam.name ?? 'Expecting command' }}</div>
         </div> 
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
           <div class="match__score">
@@ -97,7 +97,7 @@
             :alt="match.homeTeam.name" 
             class="logo"
           />
-          <div class="match__team line">{{ match.awayTeam.name }}</div>
+          <div class="match__team line">{{ match.awayTeam.name ?? 'Expecting command' }}</div>
         </div>
 
         <div v-if="isOngoing(match) || match.status === 'FINISHED'">
