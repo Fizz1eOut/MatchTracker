@@ -32,11 +32,26 @@
 
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const formatMatchTime = (utcDate: string) => {
-    return new Intl.DateTimeFormat('ru-RU', {
+    const matchDate = new Date(utcDate);
+    const now = new Date();
+
+    const isToday = now.toDateString() === matchDate.toDateString();
+
+    const options: Intl.DateTimeFormatOptions = {
       hour: '2-digit',
       minute: '2-digit',
-      timeZone: userTimeZone
-    }).format(new Date(utcDate));
+      timeZone: userTimeZone,
+    };
+
+    if (isToday) {
+      return new Intl.DateTimeFormat('ru-RU', options).format(matchDate);
+    }
+
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      timeZone: userTimeZone,
+    }).format(matchDate);
   };
 
   const isOngoing = (match: Match) => {
