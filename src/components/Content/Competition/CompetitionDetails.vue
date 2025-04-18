@@ -3,6 +3,7 @@
   import CompetitionCard from '@/components/Content/Competition/CompetitionCard.vue';
   import CompetitionTable from '@/components/Content/Competition/CompetitionTable.vue';
   import CompetitionMatches from '@/components/Content/Competition/CompetitionMatches.vue';
+  import CompetitionScorers from '@/components/Content/Competition/CompetitionScorers.vue';
 
   interface CompetitionDetailsProps {
     competition: Competition;
@@ -16,6 +17,7 @@
   <competition-table :competition="competition" />
   
   <competition-matches :competition="competition" />
+  <competition-scorers :competition="competition" />
 </template>
 
 <style scoped>
