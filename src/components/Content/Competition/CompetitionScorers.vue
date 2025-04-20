@@ -4,6 +4,7 @@
   import type { Scorer } from '@/interface/scorers.interface';
   import type { Competition } from '@/interface/сompetitions.interface';
   import AppLoadingSpinner from '@/components/Base/AppLoadingSpinner.vue';
+  import ScorersTable from '@/components/Content/Scorers/ScorersTable.vue';
 
   interface CompetitionScorersProps {
     competition: Competition;
@@ -38,7 +39,7 @@
     height="100vh"
   />
   <div v-else>
-    
+    <scorers-table :scorers="scorers" />
   </div>
 </template>
 
