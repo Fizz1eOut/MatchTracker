@@ -7,7 +7,7 @@
 <template>
   <app-header />
 
-  <main>
+  <main class="main">
     <app-container>
       <router-view />
     </app-container>
@@ -19,5 +19,9 @@
 </template>
 
 <style scoped>
-
+@media (max-width: 768px) {
+  .main {
+    padding-bottom: 80px
+  }
+}
 </style>
