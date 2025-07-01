@@ -103,7 +103,7 @@
     height="100vh"
   />
   <div v-else>
-    <div class="match-list">
+    <div v-if="Object.keys(todayMatches).length" class="match-list">
       <div class="match-list__item all-match-list__all-matches">
         <all-matches :matchesByLeague="todayMatches" :formatMatchTime="formatMatchTime" :isOngoing="isOngoing" />
       </div>
@@ -116,6 +116,11 @@
           @match-ended="loadMatches"
         />
       </div>
+    </div>
+    <div v-else>
+      <p class="no-matches-message">
+        We have not received any match data for today. They may not have loaded yet or may not be running.
+      </p>
     </div>
   </div>
 </template>
